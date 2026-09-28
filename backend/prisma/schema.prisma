@@ -1,0 +1,68 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMINISTRADOR
+  VISUALIZADOR
+}
+
+enum EstadoTramite {
+  VIGENTE
+  POR_VENCER
+  VENCIDO
+  PENDIENTE
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  nombre    String
+  role      Role     @default(VISUALIZADOR)
+  activo    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+model Tramite {
+  id              Int           @id @default(autoincrement())
+  hojaRuta        String        @unique
+  codigoRai       String        @unique
+  nombreTramite   String
+  nombreSolicitante String
+  descripcion     String?
+  fechaCreacion   DateTime      @default(now())
+  fechaVencimiento DateTime
+  estado          EstadoTramite @default(PENDIENTE)
+  observaciones    String?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  documentos Documento[]
+
+  @@index([hojaRuta])
+  @@index([codigoRai])
+  @@index([estado])
+  @@map("tramites")
+}
+
+model Documento {
+  id          Int      @id @default(autoincrement())
+  nombre      String
+  tipo        String
+  rutaMinio   String
+  tamano      Int
+  tramiteId   Int
+  tramite     Tramite  @relation(fields: [tramiteId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+
+  @@map("documentos")
+}

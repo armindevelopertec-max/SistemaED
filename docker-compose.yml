@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: smia_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: smia_db
+      POSTGRES_USER: smia_user
+      POSTGRES_PASSWORD: smia_password
+    ports:
+      - "5434:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U smia_user -d smia_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  minio:
+    image: quay.io/minio/minio:latest
+    container_name: smia_minio
+    restart: unless-stopped
+    command: server /data --console-address ":9011"
+    environment:
+      MINIO_ROOT_USER: smia_minio_root
+      MINIO_ROOT_PASSWORD: smia_minio_password
+    ports:
+      - "9010:9000"
+      - "9011:9011"
+    volumes:
+      - minio_data:/data
+    healthcheck:
+      test: ["CMD", "mc", "ready", "local"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: smia_redis
+    restart: unless-stopped
+    ports:
+      - "6380:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
+  minio_data:
+  redis_data:
