@@ -28,22 +28,22 @@ export default function VisualizadorLayout({ children }: { children: React.React
 
   return (
     <div className="min-h-screen flex flex-col">
-      <header className="bg-gray-900 text-white p-4">
+      <header className="bg-gray-900 text-white p-3 sm:p-4">
         <div className="container mx-auto flex justify-between items-center">
-          <div>
-            <h1 className="text-xl font-bold">SMIA - Consulta de Trámites</h1>
-            <p className="text-sm text-gray-400">{user.nombre}</p>
+          <div className="min-w-0">
+            <h1 className="text-lg sm:text-xl font-bold truncate">SMIA - Trámites</h1>
+            <p className="text-xs sm:text-sm text-gray-400 truncate">{user.nombre}</p>
           </div>
           <button
             onClick={handleLogout}
-            className="text-gray-300 hover:text-white"
+            className="text-gray-300 hover:text-white ml-2 text-sm sm:text-base"
           >
             Cerrar Sesión
           </button>
         </div>
       </header>
 
-      <main className="flex-1 bg-gray-100 p-8">{children}</main>
+      <main className="flex-1 bg-gray-100 p-4 sm:p-8">{children}</main>
     </div>
   );
 }

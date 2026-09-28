@@ -43,33 +43,35 @@ export default function VisualizadorPage() {
 
   return (
     <div className="max-w-4xl mx-auto">
-      <h1 className="text-2xl font-bold mb-6">Búsqueda de Trámites</h1>
+      <h1 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">Búsqueda de Trámites</h1>
 
-      <form onSubmit={handleSearch} className="bg-white p-6 rounded-lg shadow mb-6">
-        <div className="flex gap-4">
+      <form onSubmit={handleSearch} className="bg-white p-4 sm:p-6 rounded-lg shadow mb-4 sm:mb-6">
+        <div className="flex flex-col gap-3">
           <select
             value={searchTipo}
             onChange={(e) => setSearchTipo(e.target.value as any)}
-            className="border p-2 rounded-lg"
+            className="border p-2 sm:p-3 rounded-lg w-full"
           >
             <option value="hojaRuta">Hoja de Ruta</option>
             <option value="codigoRai">Código RAI</option>
           </select>
-          <input
-            type="text"
-            value={searchValue}
-            onChange={(e) => setSearchValue(e.target.value)}
-            placeholder={`Ingrese ${searchTipo === 'hojaRuta' ? 'Hoja de Ruta' : 'Código RAI'}...`}
-            className="flex-1 border p-2 rounded-lg"
-            required
-          />
-          <button
-            type="submit"
-            disabled={loading}
-            className="bg-primary-600 text-white px-6 py-2 rounded-lg hover:bg-primary-700"
-          >
-            {loading ? 'Buscando...' : 'Buscar'}
-          </button>
+          <div className="flex flex-col sm:flex-row gap-3">
+            <input
+              type="text"
+              value={searchValue}
+              onChange={(e) => setSearchValue(e.target.value)}
+              placeholder={`Ingrese ${searchTipo === 'hojaRuta' ? 'Hoja de Ruta' : 'Código RAI'}...`}
+              className="flex-1 border p-2 sm:p-3 rounded-lg w-full"
+              required
+            />
+            <button
+              type="submit"
+              disabled={loading}
+              className="bg-primary-600 text-white px-6 py-2 sm:py-3 rounded-lg hover:bg-primary-700"
+            >
+              {loading ? '...' : 'Buscar'}
+            </button>
+          </div>
         </div>
       </form>
 
@@ -80,15 +82,15 @@ export default function VisualizadorPage() {
       )}
 
       {tramite && (
-        <div className="bg-white p-6 rounded-lg shadow">
-          <div className="flex justify-between items-start mb-4">
-            <h2 className="text-xl font-semibold">{tramite.nombreTramite}</h2>
+        <div className="bg-white p-4 sm:p-6 rounded-lg shadow">
+          <div className="flex flex-col sm:flex-row justify-between items-start gap-2 mb-4">
+            <h2 className="text-lg sm:text-xl font-semibold">{tramite.nombreTramite}</h2>
             <span className={`px-3 py-1 rounded-full text-sm ${getEstadoColor(tramite.estado)}`}>
               {tramite.estado}
             </span>
           </div>
 
-          <div className="grid grid-cols-2 gap-4 mb-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
             <div>
               <p className="text-sm text-gray-500">Hoja de Ruta</p>
               <p className="font-medium">{tramite.hojaRuta}</p>
@@ -108,15 +110,15 @@ export default function VisualizadorPage() {
               </p>
             </div>
             {tramite.descripcion && (
-              <div className="col-span-2">
+              <div className="sm:col-span-2">
                 <p className="text-sm text-gray-500">Descripción</p>
-                <p>{tramite.descripcion}</p>
+                <p className="break-words">{tramite.descripcion}</p>
               </div>
             )}
             {tramite.observaciones && (
-              <div className="col-span-2">
+              <div className="sm:col-span-2">
                 <p className="text-sm text-gray-500">Observaciones</p>
-                <p>{tramite.observaciones}</p>
+                <p className="break-words">{tramite.observaciones}</p>
               </div>
             )}
           </div>
@@ -128,19 +130,19 @@ export default function VisualizadorPage() {
                 {tramite.documentos.map((doc) => (
                   <div
                     key={doc.id}
-                    className="flex items-center justify-between bg-gray-50 p-3 rounded"
+                    className="flex flex-col sm:flex-row items-start sm:items-center justify-between bg-gray-50 p-3 rounded gap-2"
                   >
-                    <div>
-                      <p className="font-medium">{doc.nombre}</p>
+                    <div className="min-w-0">
+                      <p className="font-medium truncate">{doc.nombre}</p>
                       <p className="text-sm text-gray-500">
                         {(doc.tamano / 1024).toFixed(2)} KB
                       </p>
                     </div>
                     <a
-                      href={`${process.env.NEXT_PUBLIC_API_URL}/minio/url/${encodeURIComponent(doc.rutaMinio)}`}
+                      href={`/minio/url/${encodeURIComponent(doc.rutaMinio)}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-primary-600 hover:underline"
+                      className="text-primary-600 hover:underline text-sm"
                     >
                       Ver
                     </a>

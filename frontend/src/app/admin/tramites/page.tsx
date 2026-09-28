@@ -90,47 +90,47 @@ export default function TramitesPage() {
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Trámites</h1>
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4 sm:mb-6">
+        <h1 className="text-xl sm:text-2xl font-bold">Trámites</h1>
         <button
           onClick={() => setShowForm(!showForm)}
-          className="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700"
+          className="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 w-full sm:w-auto"
         >
           {showForm ? 'Cancelar' : '+ Nuevo Trámite'}
         </button>
       </div>
 
       {showForm && (
-        <div className="bg-white p-6 rounded-lg shadow mb-6">
+        <div className="bg-white p-4 sm:p-6 rounded-lg shadow mb-4 sm:mb-6">
           <h2 className="text-lg font-semibold mb-4">Nuevo Trámite</h2>
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <input
                 placeholder="Hoja de Ruta"
                 value={formData.hojaRuta}
                 onChange={(e) => setFormData({ ...formData, hojaRuta: e.target.value })}
-                className="border p-2 rounded"
+                className="border p-2 sm:p-3 rounded-lg w-full"
                 required
               />
               <input
                 placeholder="Código RAI"
                 value={formData.codigoRai}
                 onChange={(e) => setFormData({ ...formData, codigoRai: e.target.value })}
-                className="border p-2 rounded"
+                className="border p-2 sm:p-3 rounded-lg w-full"
                 required
               />
               <input
                 placeholder="Nombre del Trámite"
                 value={formData.nombreTramite}
                 onChange={(e) => setFormData({ ...formData, nombreTramite: e.target.value })}
-                className="border p-2 rounded"
+                className="border p-2 sm:p-3 rounded-lg w-full"
                 required
               />
               <input
                 placeholder="Nombre del Solicitante"
                 value={formData.nombreSolicitante}
                 onChange={(e) => setFormData({ ...formData, nombreSolicitante: e.target.value })}
-                className="border p-2 rounded"
+                className="border p-2 sm:p-3 rounded-lg w-full"
                 required
               />
               <input
@@ -138,23 +138,23 @@ export default function TramitesPage() {
                 placeholder="Fecha de Vencimiento"
                 value={formData.fechaVencimiento}
                 onChange={(e) => setFormData({ ...formData, fechaVencimiento: e.target.value })}
-                className="border p-2 rounded"
+                className="border p-2 sm:p-3 rounded-lg w-full"
                 required
               />
               <textarea
                 placeholder="Descripción (opcional)"
                 value={formData.descripcion}
                 onChange={(e) => setFormData({ ...formData, descripcion: e.target.value })}
-                className="border p-2 rounded"
+                className="border p-2 sm:p-3 rounded-lg w-full sm:col-span-2"
               />
             </div>
 
             <div
               {...getRootProps()}
-              className="border-2 border-dashed border-gray-300 p-4 rounded cursor-pointer hover:border-primary-500"
+              className="border-2 border-dashed border-gray-300 p-4 rounded-lg cursor-pointer hover:border-primary-500"
             >
               <input {...getInputProps()} />
-              <p className="text-center text-gray-500">
+              <p className="text-center text-gray-500 text-sm">
                 Arrastra archivos aquí o haz clic para seleccionar (PDF, imágenes)
               </p>
             </div>
@@ -163,8 +163,8 @@ export default function TramitesPage() {
               <div className="space-y-2">
                 {files.map((file, index) => (
                   <div key={index} className="flex items-center justify-between bg-gray-50 p-2 rounded">
-                    <span className="text-sm">{file.name}</span>
-                    <button type="button" onClick={() => removeFile(index)} className="text-red-500">
+                    <span className="text-sm truncate">{file.name}</span>
+                    <button type="button" onClick={() => removeFile(index)} className="text-red-500 ml-2">
                       ✕
                     </button>
                   </div>
@@ -175,7 +175,7 @@ export default function TramitesPage() {
             <button
               type="submit"
               disabled={loading}
-              className="bg-primary-600 text-white px-6 py-2 rounded-lg hover:bg-primary-700 disabled:bg-gray-400"
+              className="bg-primary-600 text-white px-6 py-2 rounded-lg hover:bg-primary-700 disabled:bg-gray-400 w-full"
             >
               {loading ? 'Guardando...' : 'Guardar Trámite'}
             </button>
@@ -183,20 +183,20 @@ export default function TramitesPage() {
         </div>
       )}
 
-      <div className="flex gap-4 mb-6">
+      <div className="flex flex-col sm:flex-row gap-4 mb-4 sm:mb-6">
         <input
           type="text"
-          placeholder="Buscar por Hoja de Ruta, RAI, solicitante..."
+          placeholder="Buscar..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="flex-1 border p-2 rounded-lg"
+          className="flex-1 border p-2 sm:p-3 rounded-lg w-full"
         />
         <select
           value={filterEstado}
           onChange={(e) => setFilterEstado(e.target.value)}
-          className="border p-2 rounded-lg"
+          className="border p-2 sm:p-3 rounded-lg w-full sm:w-auto"
         >
-          <option value="">Todos los estados</option>
+          <option value="">Todos</option>
           <option value="VIGENTE">Vigente</option>
           <option value="POR_VENCER">Por Vencer</option>
           <option value="VENCIDO">Vencido</option>
@@ -204,38 +204,38 @@ export default function TramitesPage() {
         </select>
       </div>
 
-      <div className="bg-white rounded-lg shadow overflow-hidden">
-        <table className="w-full">
+      <div className="bg-white rounded-lg shadow overflow-x-auto">
+        <table className="w-full min-w-[600px]">
           <thead className="bg-gray-50">
             <tr>
-              <th className="px-4 py-3 text-left text-sm font-semibold">Hoja de Ruta</th>
-              <th className="px-4 py-3 text-left text-sm font-semibold">Código RAI</th>
-              <th className="px-4 py-3 text-left text-sm font-semibold">Trámite</th>
-              <th className="px-4 py-3 text-left text-sm font-semibold">Solicitante</th>
-              <th className="px-4 py-3 text-left text-sm font-semibold">Vencimiento</th>
-              <th className="px-4 py-3 text-left text-sm font-semibold">Estado</th>
-              <th className="px-4 py-3 text-left text-sm font-semibold">Acciones</th>
+              <th className="px-3 sm:px-4 py-3 text-left text-xs sm:text-sm font-semibold">Hoja de Ruta</th>
+              <th className="px-3 sm:px-4 py-3 text-left text-xs sm:text-sm font-semibold">Código RAI</th>
+              <th className="px-3 sm:px-4 py-3 text-left text-xs sm:text-sm font-semibold">Trámite</th>
+              <th className="px-3 sm:px-4 py-3 text-left text-xs sm:text-sm font-semibold">Solicitante</th>
+              <th className="px-3 sm:px-4 py-3 text-left text-xs sm:text-sm font-semibold">Vencimiento</th>
+              <th className="px-3 sm:px-4 py-3 text-left text-xs sm:text-sm font-semibold">Estado</th>
+              <th className="px-3 sm:px-4 py-3 text-left text-xs sm:text-sm font-semibold">Acciones</th>
             </tr>
           </thead>
           <tbody className="divide-y">
             {tramites.map((tramite) => (
               <tr key={tramite.id} className="hover:bg-gray-50">
-                <td className="px-4 py-3">{tramite.hojaRuta}</td>
-                <td className="px-4 py-3">{tramite.codigoRai}</td>
-                <td className="px-4 py-3">{tramite.nombreTramite}</td>
-                <td className="px-4 py-3">{tramite.nombreSolicitante}</td>
-                <td className="px-4 py-3">
+                <td className="px-3 sm:px-4 py-3 text-xs sm:text-sm">{tramite.hojaRuta}</td>
+                <td className="px-3 sm:px-4 py-3 text-xs sm:text-sm">{tramite.codigoRai}</td>
+                <td className="px-3 sm:px-4 py-3 text-xs sm:text-sm truncate max-w-[100px]">{tramite.nombreTramite}</td>
+                <td className="px-3 sm:px-4 py-3 text-xs sm:text-sm truncate max-w-[100px]">{tramite.nombreSolicitante}</td>
+                <td className="px-3 sm:px-4 py-3 text-xs sm:text-sm">
                   {new Date(tramite.fechaVencimiento).toLocaleDateString('es-ES')}
                 </td>
-                <td className="px-4 py-3">
+                <td className="px-3 sm:px-4 py-3">
                   <span className={`px-2 py-1 rounded-full text-xs ${getEstadoColor(tramite.estado)}`}>
                     {tramite.estado}
                   </span>
                 </td>
-                <td className="px-4 py-3">
+                <td className="px-3 sm:px-4 py-3">
                   <a
                     href={`/admin/tramites/${tramite.id}`}
-                    className="text-primary-600 hover:underline"
+                    className="text-primary-600 hover:underline text-xs sm:text-sm"
                   >
                     Ver
                   </a>
@@ -245,7 +245,7 @@ export default function TramitesPage() {
           </tbody>
         </table>
         {tramites.length === 0 && (
-          <p className="p-8 text-center text-gray-500">No hay trámites registrados</p>
+          <p className="p-4 sm:p-8 text-center text-gray-500">No hay trámites registrados</p>
         )}
       </div>
     </div>

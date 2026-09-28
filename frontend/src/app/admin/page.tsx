@@ -23,22 +23,22 @@ export default function AdminDashboard() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-6">Dashboard</h1>
+      <h1 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">Dashboard</h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 sm:gap-4">
         {cards.map((card) => (
           <div
             key={card.label}
-            className={`${card.color} text-white p-6 rounded-lg shadow`}
+            className={`${card.color} text-white p-3 sm:p-6 rounded-lg shadow`}
           >
-            <p className="text-sm opacity-80">{card.label}</p>
-            <p className="text-3xl font-bold">{card.value}</p>
+            <p className="text-xs sm:text-sm opacity-80">{card.label}</p>
+            <p className="text-xl sm:text-3xl font-bold">{card.value}</p>
           </div>
         ))}
       </div>
 
-      <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-white p-6 rounded-lg shadow">
+      <div className="mt-6 sm:mt-8 grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+        <div className="bg-white p-4 sm:p-6 rounded-lg shadow">
           <h2 className="text-lg font-semibold mb-4">Acciones Rápidas</h2>
           <div className="space-y-3">
             <a
@@ -56,7 +56,7 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow">
+        <div className="bg-white p-4 sm:p-6 rounded-lg shadow">
           <h2 className="text-lg font-semibold mb-4">Estado General</h2>
           <div className="space-y-2">
             <div className="flex justify-between items-center">

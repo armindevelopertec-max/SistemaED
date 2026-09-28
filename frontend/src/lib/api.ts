@@ -1,17 +1,14 @@
 import axios from 'axios';
-import Cookies from 'js-cookie';
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
 
 export const api = axios.create({
-  baseURL: API_URL,
+  baseURL: '',
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
 api.interceptors.request.use((config) => {
-  const token = Cookies.get('token');
+  const token = localStorage.getItem('token');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
@@ -22,7 +19,8 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      Cookies.remove('token');
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
       window.location.href = '/login';
     }
     return Promise.reject(error);
@@ -32,16 +30,16 @@ api.interceptors.response.use(
 export const authService = {
   login: async (email: string, password: string) => {
     const { data } = await api.post('/auth/login', { email, password });
-    Cookies.set('token', data.access_token, { expires: 1 });
-    Cookies.set('user', JSON.stringify(data.user), { expires: 1 });
+    localStorage.setItem('token', data.access_token);
+    localStorage.setItem('user', JSON.stringify(data.user));
     return data;
   },
   logout: () => {
-    Cookies.remove('token');
-    Cookies.remove('user');
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
   },
   getUser: () => {
-    const userStr = Cookies.get('user');
+    const userStr = localStorage.getItem('user');
     return userStr ? JSON.parse(userStr) : null;
   },
 };
