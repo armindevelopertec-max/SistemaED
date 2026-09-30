@@ -10,7 +10,7 @@ services:
       POSTGRES_USER: smia_user
       POSTGRES_PASSWORD: smia_password
     ports:
-      - "5434:5432"
+      - "5435:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -18,18 +18,20 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - sistemaed-network
 
   minio:
-    image: quay.io/minio/minio:latest
+    image: minio/minio:latest
     container_name: smia_minio
     restart: unless-stopped
-    command: server /data --console-address ":9011"
+    command: server /data --console-address ":9021"
     environment:
       MINIO_ROOT_USER: smia_minio_root
       MINIO_ROOT_PASSWORD: smia_minio_password
     ports:
-      - "9010:9000"
-      - "9011:9011"
+      - "9020:9000"
+      - "9021:9021"
     volumes:
       - minio_data:/data
     healthcheck:
@@ -37,13 +39,15 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - sistemaed-network
 
   redis:
     image: redis:7-alpine
     container_name: smia_redis
     restart: unless-stopped
     ports:
-      - "6380:6379"
+      - "6381:6379"
     volumes:
       - redis_data:/data
     healthcheck:
@@ -51,8 +55,14 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - sistemaed-network
 
 volumes:
   postgres_data:
   minio_data:
   redis_data:
+
+networks:
+  sistemaed-network:
+    driver: bridge

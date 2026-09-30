@@ -2,7 +2,7 @@
 
 set -e
 
-echo "=== SistemaED - Desarrollo (Podman) ==="
+echo "=== SistemaED - Iniciando Producción (Podman) ==="
 
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
@@ -22,22 +22,19 @@ fi
 log_success "Podman OK"
 
 # Verificar podman-compose
-log_info "Verificando podman-compose..."
 if ! command -v podman-compose &> /dev/null; then
     log_error "podman-compose no instalado"
-    log_info "Instala con: pip3 install podman-compose"
     exit 1
 fi
-log_success "podman-compose OK"
 
 COMPOSE_CMD="podman-compose"
 
-# Detener contenedores existentes
+# Detener contenedores anteriores
 log_info "Deteniendo contenedores anteriores..."
 $COMPOSE_CMD down 2>/dev/null || true
 
 # Iniciar servicios de datos
-log_info "Iniciando PostgreSQL, MinIO, Redis..."
+log_info "Iniciando PostgreSQL, MinIO y Redis..."
 $COMPOSE_CMD up -d
 
 # Esperar PostgreSQL
@@ -47,7 +44,7 @@ for i in {1..30}; do
         log_success "PostgreSQL listo"
         break
     fi
-    if [ $i -eq 30 ]; then log_error "PostgreSQL timeout"; exit 1; fi
+    if [ $i -eq 30 ]; then log_error "PostgreSQL no respondió"; exit 1; fi
     sleep 1
 done
 
@@ -58,52 +55,49 @@ for i in {1..30}; do
         log_success "MinIO listo"
         break
     fi
-    if [ $i -eq 30 ]; then log_error "MinIO timeout"; exit 1; fi
+    if [ $i -eq 30 ]; then log_error "MinIO no respondió"; exit 1; fi
     sleep 1
 done
 
-# Backend dev
-log_info "Instalando backend..."
+# Backend - Build
+log_info "Building backend..."
 cd backend
-npm install
+npm ci
+npm run build
+
+# Generar Prisma Client y migraciones
+log_info "Generando Prisma Client..."
 npx prisma generate
-npx prisma db push
 
-# Frontend dev
-log_info "Instalando frontend..."
-cd ../frontend
-npm install
+log_info "Ejecutando migraciones..."
+npx prisma migrate deploy
+
+cd ..
+
+# Frontend - Build
+log_info "Building frontend..."
+cd frontend
+npm ci
+npm run build
+
+cd ..
 
 echo ""
 echo "========================================"
-log_success "SistemaED listo para desarrollo"
+log_success "Build completado - Listo para producción"
 echo "========================================"
 echo ""
-echo "Servicios:"
-echo "  PostgreSQL:  localhost:5435"
-echo "  MinIO API:   localhost:9020"
-echo "  MinIO Console: localhost:9021"
-echo "  Redis:       localhost:6381"
+echo "Para iniciar en producción:"
+echo "  cd backend && npm run start:prod &"
+echo "  cd frontend && npm run start &"
 echo ""
-echo "Iniciando en modo desarrollo (hot reload)..."
+echo "O usar PM2 / systemd para gestión de procesos"
 echo ""
 
-# Backend dev
-cd ../backend
-npm run start:dev &
-BACKEND_PID=$!
-
-# Frontend dev
-cd ../frontend
-npm run dev &
-FRONTEND_PID=$!
-
-echo ""
-log_success "Desarrollo corriendo"
-log_info "Backend:  http://localhost:3003"
-log_info "Frontend: http://localhost:3002"
-log_info "Presiona Ctrl+C para detener"
-
-trap "kill $BACKEND_PID $FRONTEND_PID 2>/dev/null; $COMPOSE_CMD down; exit" SIGINT SIGTERM
-
-wait
+# Verificar builds
+if [ -d "backend/dist" ] && [ -d "frontend/.next/standalone" ]; then
+    log_success "Builds verificados correctamente"
+else
+    log_error "Builds incompletos"
+    exit 1
+fi
