@@ -12,6 +12,8 @@ async function bootstrap() {
 
   const app = await NestFactory.create(AppModule);
 
+  app.setGlobalPrefix('api');
+
   const corsOrigin = process.env.CORS_ORIGIN?.trim()
     ? process.env.CORS_ORIGIN.split(',')
     : true;

@@ -29,7 +29,7 @@ api.interceptors.response.use(
 
 export const authService = {
   login: async (email: string, password: string) => {
-    const { data } = await api.post('/auth/login', { email, password });
+    const { data } = await api.post('/api/auth/login', { email, password });
     localStorage.setItem('token', data.access_token);
     localStorage.setItem('user', JSON.stringify(data.user));
     return data;
@@ -45,32 +45,32 @@ export const authService = {
 };
 
 export const usersService = {
-  getAll: () => api.get('/users'),
-  create: (data: any) => api.post('/users', data),
-  update: (id: number, data: any) => api.patch(`/users/${id}`, data),
-  delete: (id: number) => api.delete(`/users/${id}`),
+  getAll: () => api.get('/api/users'),
+  create: (data: any) => api.post('/api/users', data),
+  update: (id: number, data: any) => api.patch(`/api/users/${id}`, data),
+  delete: (id: number) => api.delete(`/api/users/${id}`),
 };
 
 export const tramitesService = {
   getAll: (params?: { estado?: string; search?: string }) =>
-    api.get('/tramites', { params }),
-  getById: (id: number) => api.get(`/tramites/${id}`),
+    api.get('/api/tramites', { params }),
+  getById: (id: number) => api.get(`/api/tramites/${id}`),
   create: (formData: FormData) =>
-    api.post('/tramites', formData, {
+    api.post('/api/tramites', formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
     }),
-  update: (id: number, data: any) => api.patch(`/tramites/${id}`, data),
-  delete: (id: number) => api.delete(`/tramites/${id}`),
+  update: (id: number, data: any) => api.patch(`/api/tramites/${id}`, data),
+  delete: (id: number) => api.delete(`/api/tramites/${id}`),
   search: (params: { hojaRuta?: string; codigoRai?: string }) =>
-    api.get('/tramites/buscar', { params }),
-  generatePdf: (id: number) => api.post(`/tramites/${id}/pdf`),
+    api.get('/api/tramites/buscar', { params }),
+  generatePdf: (id: number) => api.post(`/api/tramites/${id}/pdf`),
   addDocumento: (id: number, formData: FormData) =>
-    api.post(`/tramites/${id}/documentos`, formData, {
+    api.post(`/api/tramites/${id}/documentos`, formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
     }),
   deleteDocumento: (id: number, documentoId: number) =>
-    api.delete(`/tramites/${id}/documentos/${documentoId}`),
-  getStats: () => api.get('/tramites/stats'),
+    api.delete(`/api/tramites/${id}/documentos/${documentoId}`),
+  getStats: () => api.get('/api/tramites/stats'),
 };
 
 export const minioService = {
@@ -78,18 +78,18 @@ export const minioService = {
     const formData = new FormData();
     formData.append('file', file);
     if (folder) formData.append('folder', folder);
-    return api.post('/minio/upload', formData, {
+    return api.post('/api/minio/upload', formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
   },
   getUrl: (fileName: string) =>
-    api.get(`/minio/url/${encodeURIComponent(fileName)}`),
+    api.get(`/api/minio/url/${encodeURIComponent(fileName)}`),
   delete: (fileName: string) =>
-    api.delete(`/minio/${encodeURIComponent(fileName)}`),
+    api.delete(`/api/minio/${encodeURIComponent(fileName)}`),
 };
 
 export const reportesService = {
-  getEstados: () => api.get('/reportes/estados'),
+  getEstados: () => api.get('/api/reportes/estados'),
   getPorVencer: (dias?: number) =>
-    api.get('/reportes/por-vencer', { params: { dias } }),
+    api.get('/api/reportes/por-vencer', { params: { dias } }),
 };

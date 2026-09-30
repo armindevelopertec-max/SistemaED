@@ -7,18 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Role {
-  ADMINISTRADOR
-  VISUALIZADOR
-}
-
-enum EstadoTramite {
-  VIGENTE
-  POR_VENCER
-  VENCIDO
-  PENDIENTE
-}
-
 model User {
   id        Int      @id @default(autoincrement())
   email     String   @unique
@@ -33,20 +21,19 @@ model User {
 }
 
 model Tramite {
-  id              Int           @id @default(autoincrement())
-  hojaRuta        String        @unique
-  codigoRai       String        @unique
-  nombreTramite   String
+  id                Int           @id @default(autoincrement())
+  hojaRuta          String        @unique
+  codigoRai         String        @unique
+  nombreTramite     String
   nombreSolicitante String
-  descripcion     String?
-  fechaCreacion   DateTime      @default(now())
-  fechaVencimiento DateTime
-  estado          EstadoTramite @default(PENDIENTE)
-  observaciones    String?
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @updatedAt
-
-  documentos Documento[]
+  descripcion       String?
+  fechaCreacion     DateTime      @default(now())
+  fechaVencimiento  DateTime
+  estado            EstadoTramite @default(PENDIENTE)
+  observaciones     String?
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+  documentos        Documento[]
 
   @@index([hojaRuta])
   @@index([codigoRai])
@@ -55,14 +42,26 @@ model Tramite {
 }
 
 model Documento {
-  id          Int      @id @default(autoincrement())
-  nombre      String
-  tipo        String
-  rutaMinio   String
-  tamano      Int
-  tramiteId   Int
-  tramite     Tramite  @relation(fields: [tramiteId], references: [id], onDelete: Cascade)
-  createdAt   DateTime @default(now())
+  id        Int      @id @default(autoincrement())
+  nombre    String
+  tipo      String
+  rutaMinio String
+  tamano    Int
+  tramiteId Int
+  createdAt DateTime @default(now())
+  tramite   Tramite  @relation(fields: [tramiteId], references: [id], onDelete: Cascade)
 
   @@map("documentos")
+}
+
+enum Role {
+  ADMINISTRADOR
+  VISUALIZADOR
+}
+
+enum EstadoTramite {
+  VIGENTE
+  POR_VENCER
+  VENCIDO
+  PENDIENTE
 }
