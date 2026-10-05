@@ -1,0 +1,201 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  nombre    String
+  role      Role     @default(VISUALIZADOR)
+  activo    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+model UnidadIndustrial {
+  id                Int           @id @default(autoincrement())
+  codigoRai        String        @unique
+  nombre           String
+  razonSocial      String
+  direccion        String
+  distrito         Int
+  email            String?
+  x               Int?
+  y               Int?
+  msnm            Int?
+  faseActividad    String        @default("OPERACION")
+  estadoRegistro  String        @default("VIGENTE")
+  categoriaFinal  Int           @default(3)
+
+  representanteLegal   RepresentanteLegal?
+  rubrosActividad      RubroActividad[]
+  rai                 RAI?
+  irapCategoria3      IRAPCategoria3[]
+  irapCategoria12     IRAPCategoria12[]
+  informesAmbientales  InformeAmbientalAnual[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("unidades_industriales")
+}
+
+model RepresentanteLegal {
+  id                  Int              @id @default(autoincrement())
+  unidadIndustrialId   Int              @unique
+  nombre              String
+  ci                  String
+  telefono            String?
+  unidadIndustrial     UnidadIndustrial @relation(fields: [unidadIndustrialId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("representantes_legales")
+}
+
+model RubroActividad {
+  id                  Int              @id @default(autoincrement())
+  unidadIndustrialId   Int
+  codigoCaeb           String
+  descripcion          String
+  categoria           Int
+
+  unidadIndustrial     UnidadIndustrial @relation(fields: [unidadIndustrialId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([unidadIndustrialId])
+
+  @@map("rubros_actividad")
+}
+
+model RAI {
+  id                  Int              @id @default(autoincrement())
+  unidadIndustrialId   Int              @unique
+  unidadIndustrial     UnidadIndustrial @relation(fields: [unidadIndustrialId], references: [id], onDelete: Cascade)
+
+  registroInicial      RAIRegistroInicial?
+  historial           RAIHistorial[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("rai")
+}
+
+model RAIRegistroInicial {
+  id                  Int      @id @default(autoincrement())
+  raiId               Int      @unique
+  fechaRegistro       DateTime
+  tecnicoDesignado    String
+  existeEnArchivo     Boolean  @default(true)
+  documentoKey        String?
+
+  rai                 RAI      @relation(fields: [raiId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("rai_registro_inicial")
+}
+
+model RAIHistorial {
+  id                  Int      @id @default(autoincrement())
+  raiId               Int
+  estado              String
+  causaRazon          String
+  fechaRegistro       DateTime
+  tecnicoDesignado    String
+  existeEnArchivo     Boolean  @default(true)
+  documentoKey        String?
+
+  rai                 RAI      @relation(fields: [raiId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([raiId])
+
+  @@map("rai_historial")
+}
+
+model IRAPCategoria3 {
+  id                  Int       @id @default(autoincrement())
+  unidadIndustrialId   Int
+  documentoAmbiental   String
+  fechaInforme        DateTime
+  estado              String
+  certificadoAprobacion String?
+  tecnicoDesignado    String
+  existeEnArchivo     Boolean   @default(true)
+  documentoKey        String?
+
+  unidadIndustrial     UnidadIndustrial @relation(fields: [unidadIndustrialId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([unidadIndustrialId])
+
+  @@map("irap_categoria3")
+}
+
+model IRAPCategoria12 {
+  id                  Int       @id @default(autoincrement())
+  unidadIndustrialId   Int
+  documentoAmbiental   String
+  fechaInforme        DateTime
+  estado              String
+  certificadAprobacion String?
+  remisionDocumento    String?
+  daa                 String?
+  fechaDaa            DateTime?
+  tecnicoDesignado    String
+  existeEnArchivo     Boolean   @default(true)
+  documentoKey        String?
+
+  unidadIndustrial     UnidadIndustrial @relation(fields: [unidadIndustrialId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([unidadIndustrialId])
+
+  @@map("irap_categoria12")
+}
+
+model InformeAmbientalAnual {
+  id                  Int       @id @default(autoincrement())
+  unidadIndustrialId   Int
+  gestion             Int
+  fechaInforme        DateTime
+  monitoreos           String[]
+  tecnicoDesignado    String
+  existeEnArchivo     Boolean   @default(true)
+  documentoKey        String?
+
+  unidadIndustrial     UnidadIndustrial @relation(fields: [unidadIndustrialId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([unidadIndustrialId])
+  @@index([gestion])
+
+  @@map("informes_ambientales")
+}
+
+enum Role {
+  ADMINISTRADOR
+  VISUALIZADOR
+}
