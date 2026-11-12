@@ -46,7 +46,7 @@ Sistema de gestión de expedientes ambientales para unidades industriales con au
 
 ```bash
 git clone <repo-url>
-cd SistemaED
+cd smia
 ```
 
 ### 2. Configurar Docker Desktop (Windows)
@@ -204,7 +204,7 @@ Gestión de informes anuales con documentos escaneados.
 ## Estructura del Proyecto
 
 ```
-SistemaED/
+smia/
 ├── docker-compose.yml
 ├── backend/
 │   ├── prisma/
