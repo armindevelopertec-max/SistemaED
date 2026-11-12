@@ -435,7 +435,7 @@ export default function ExpedienteDetallePage() {
             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
           </svg>
-          <p className="text-gray-500">Cargando expediente...</p>
+          <p className="text-gray-500 dark:text-gray-400">Cargando expediente...</p>
         </div>
       </div>
     );
@@ -466,7 +466,7 @@ export default function ExpedienteDetallePage() {
 
       {editModal && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl shadow-xl max-w-lg w-full p-6">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl max-w-lg w-full p-6">
             <h3 className="text-lg font-semibold mb-4">
               {editModal.type === 'rubro' && 'Editar Rubro'}
               {editModal.type === 'irap3' && 'Editar IRAP Categoría 3'}
@@ -525,7 +525,7 @@ export default function ExpedienteDetallePage() {
                 <input type="date" value={editForm.fechaInforme || ''} onChange={(e) => setEditForm({...editForm, fechaInforme: e.target.value})} className="w-full px-3 py-2 border rounded-lg" />
                 <input type="text" value={editForm.tecnicoDesignado || ''} onChange={(e) => setEditForm({...editForm, tecnicoDesignado: e.target.value})} className="w-full px-3 py-2 border rounded-lg" placeholder="Técnico Designado" />
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Monitoreos</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Monitoreos</label>
                   <div className="flex flex-wrap gap-2">
                     {MONITOREOS.map(m => (
                       <button key={m} type="button" onClick={() => {
@@ -533,7 +533,7 @@ export default function ExpedienteDetallePage() {
                           ? editForm.monitoreos.filter((x: string) => x !== m)
                           : [...editForm.monitoreos, m];
                         setEditForm({...editForm, monitoreos});
-                      }} className={`px-3 py-1 rounded-full text-sm ${editForm.monitoreos?.includes(m) ? 'bg-indigo-600 text-white' : 'bg-gray-200 text-gray-700'}`}>{m}</button>
+                      }} className={`px-3 py-1 rounded-full text-sm ${editForm.monitoreos?.includes(m) ? 'bg-indigo-600 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300'}`}>{m}</button>
                     ))}
                   </div>
                 </div>
@@ -557,7 +557,7 @@ export default function ExpedienteDetallePage() {
                 <input type="text" value={editForm.tecnicoDesignado || ''} onChange={(e) => setEditForm({...editForm, tecnicoDesignado: e.target.value})} className="w-full px-3 py-2 border rounded-lg" placeholder="Técnico Designado" />
                 <div className="flex items-center gap-2">
                   <input type="checkbox" id="existeEnArchivo" checked={editForm.existeEnArchivo} onChange={(e) => setEditForm({...editForm, existeEnArchivo: e.target.checked})} className="w-4 h-4" />
-                  <label htmlFor="existeEnArchivo" className="text-sm text-gray-700">Existe Archivo</label>
+                  <label htmlFor="existeEnArchivo" className="text-sm text-gray-700 dark:text-gray-300">Existe Archivo</label>
                 </div>
               </div>
             )}
@@ -566,56 +566,56 @@ export default function ExpedienteDetallePage() {
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="col-span-2">
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Nombre</label>
                     <input type="text" value={editUnidadForm.nombre || ''} onChange={(e) => setEditUnidadForm({...editUnidadForm, nombre: e.target.value})} className="w-full px-3 py-2 border rounded-lg" />
                   </div>
                   <div className="col-span-2">
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Razón Social</label>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Razón Social</label>
                     <input type="text" value={editUnidadForm.razonSocial || ''} onChange={(e) => setEditUnidadForm({...editUnidadForm, razonSocial: e.target.value})} className="w-full px-3 py-2 border rounded-lg" />
                   </div>
                   <div className="col-span-2">
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Dirección</label>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Dirección</label>
                     <input type="text" value={editUnidadForm.direccion || ''} onChange={(e) => setEditUnidadForm({...editUnidadForm, direccion: e.target.value})} className="w-full px-3 py-2 border rounded-lg" />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Distrito</label>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Distrito</label>
                     <input type="number" value={editUnidadForm.distrito || ''} onChange={(e) => setEditUnidadForm({...editUnidadForm, distrito: parseInt(e.target.value)})} className="w-full px-3 py-2 border rounded-lg" />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email</label>
                     <input type="email" value={editUnidadForm.email || ''} onChange={(e) => setEditUnidadForm({...editUnidadForm, email: e.target.value})} className="w-full px-3 py-2 border rounded-lg" />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Coordenada X</label>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Coordenada X</label>
                     <input type="number" value={editUnidadForm.x || ''} onChange={(e) => setEditUnidadForm({...editUnidadForm, x: parseInt(e.target.value)})} className="w-full px-3 py-2 border rounded-lg" />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Coordenada Y</label>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Coordenada Y</label>
                     <input type="number" value={editUnidadForm.y || ''} onChange={(e) => setEditUnidadForm({...editUnidadForm, y: parseInt(e.target.value)})} className="w-full px-3 py-2 border rounded-lg" />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">MSNM</label>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">MSNM</label>
                     <input type="number" value={editUnidadForm.msnm || ''} onChange={(e) => setEditUnidadForm({...editUnidadForm, msnm: parseInt(e.target.value)})} className="w-full px-3 py-2 border rounded-lg" />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Fase Actividad</label>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Fase Actividad</label>
                     <input type="text" value={editUnidadForm.faseActividad || ''} onChange={(e) => setEditUnidadForm({...editUnidadForm, faseActividad: e.target.value})} className="w-full px-3 py-2 border rounded-lg" />
                   </div>
                 </div>
                 {unidad.representanteLegal && (
                   <div className="border-t pt-4 mt-4">
-                    <h4 className="font-medium text-gray-900 mb-3">Representante Legal</h4>
+                    <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-3">Representante Legal</h4>
                     <div className="grid grid-cols-3 gap-4">
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Nombre</label>
                         <input type="text" value={editRepresentanteForm.nombre || ''} onChange={(e) => setEditRepresentanteForm({...editRepresentanteForm, nombre: e.target.value})} className="w-full px-3 py-2 border rounded-lg" />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">CI</label>
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">CI</label>
                         <input type="text" value={editRepresentanteForm.ci || ''} onChange={(e) => setEditRepresentanteForm({...editRepresentanteForm, ci: e.target.value})} className="w-full px-3 py-2 border rounded-lg" />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Teléfono</label>
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Teléfono</label>
                         <input type="text" value={editRepresentanteForm.telefono || ''} onChange={(e) => setEditRepresentanteForm({...editRepresentanteForm, telefono: e.target.value})} className="w-full px-3 py-2 border rounded-lg" />
                       </div>
                     </div>
@@ -625,7 +625,7 @@ export default function ExpedienteDetallePage() {
             )}
 
             <div className="flex justify-end gap-2 mt-6">
-              <button onClick={() => setEditModal(null)} className="px-4 py-2 border rounded-lg hover:bg-gray-50">Cancelar</button>
+              <button onClick={() => setEditModal(null)} className="px-4 py-2 border rounded-lg hover:bg-gray-50 dark:bg-gray-700">Cancelar</button>
               <button onClick={() => {
                 if (editModal.type === 'rubro') saveEditRubro();
                 else if (editModal.type === 'irap3') saveEditIrapCat3();
@@ -642,11 +642,11 @@ export default function ExpedienteDetallePage() {
 
       {deleteModal && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl shadow-xl max-w-md w-full p-6">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl max-w-md w-full p-6">
             <h3 className="text-lg font-semibold mb-2">Confirmar eliminación</h3>
-            <p className="text-gray-600 mb-6">¿Está seguro de eliminar <strong>{deleteModal.nombre}</strong>? Esta acción no se puede deshacer.</p>
+            <p className="text-gray-600 dark:text-gray-400 mb-6">¿Está seguro de eliminar <strong>{deleteModal.nombre}</strong>? Esta acción no se puede deshacer.</p>
             <div className="flex justify-end gap-3">
-              <button onClick={() => setDeleteModal(null)} className="px-4 py-2 border rounded-lg hover:bg-gray-50">Cancelar</button>
+              <button onClick={() => setDeleteModal(null)} className="px-4 py-2 border rounded-lg hover:bg-gray-50 dark:bg-gray-700">Cancelar</button>
               <button onClick={async () => {
                 try {
                   if (deleteModal.type === 'historial') {
@@ -681,24 +681,24 @@ export default function ExpedienteDetallePage() {
       )}
 
       <div className="flex items-center gap-4">
-        <Link href="/admin/expediente" className="text-gray-500 hover:text-gray-700">
+        <Link href="/admin/expediente" className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:text-gray-300">
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
         </Link>
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">{unidad.nombre}</h1>
-          <p className="text-gray-500">Código RAI: <span className="font-mono">{unidad.codigoRai}</span></p>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">{unidad.nombre}</h1>
+          <p className="text-gray-500 dark:text-gray-400">Código RAI: <span className="font-mono">{unidad.codigoRai}</span></p>
         </div>
         <div className="ml-auto flex gap-2">
           <span className={`px-3 py-1 rounded-full text-sm font-semibold ${
-            unidad.estadoRegistro === 'VIGENTE' ? 'bg-emerald-100 text-emerald-800' : 'bg-red-100 text-red-800'
+            unidad.estadoRegistro === 'VIGENTE' ? 'bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300' : 'bg-red-100 dark:bg-red-950 text-red-800 dark:text-red-300'
           }`}>
             {unidad.estadoRegistro}
           </span>
           <span className={`px-3 py-1 rounded-full text-sm font-semibold ${
             unidad.categoriaFinal === 3 ? 'bg-rose-100 text-rose-800' :
-            unidad.categoriaFinal === 2 ? 'bg-purple-100 text-purple-800' : 'bg-blue-100 text-blue-800'
+            unidad.categoriaFinal === 2 ? 'bg-purple-100 dark:bg-purple-950 text-purple-800 dark:text-purple-300' : 'bg-blue-100 dark:bg-blue-950 text-blue-800 dark:text-blue-300'
           }`}>
             Categoría {unidad.categoriaFinal}
           </span>
@@ -708,7 +708,7 @@ export default function ExpedienteDetallePage() {
         </div>
       </div>
 
-      <div className="border-b border-gray-200">
+      <div className="border-b border-gray-200 dark:border-gray-700">
         <nav className="flex gap-1 overflow-x-auto pb-2">
           {tabs.map((tab) => (
             <button
@@ -716,8 +716,8 @@ export default function ExpedienteDetallePage() {
               onClick={() => setActiveTab(tab.id as TabType)}
               className={`flex items-center gap-2 px-4 py-3 rounded-t-xl whitespace-nowrap transition-all ${
                 activeTab === tab.id
-                  ? 'bg-white text-indigo-600 border-b-2 border-indigo-600'
-                  : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
+                  ? 'bg-white dark:bg-gray-800 text-indigo-600 border-b-2 border-indigo-600'
+                  : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:bg-gray-700'
               }`}
             >
               <span>{tab.icon}</span>
@@ -727,64 +727,64 @@ export default function ExpedienteDetallePage() {
         </nav>
       </div>
 
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
         {activeTab === 'identificacion' && (
           <div className="space-y-6">
-            <h2 className="text-lg font-semibold text-gray-900 border-b pb-2">Datos de la Unidad Industrial</h2>
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 border-b pb-2">Datos de la Unidad Industrial</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               <div>
-                <label className="block text-sm font-medium text-gray-500 mb-1">Código RAI</label>
-                <p className="text-gray-900 font-mono bg-gray-50 px-3 py-2 rounded-lg">{unidad.codigoRai}</p>
+                <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">Código RAI</label>
+                <p className="text-gray-900 dark:text-gray-100 font-mono bg-gray-50 dark:bg-gray-700 px-3 py-2 rounded-lg">{unidad.codigoRai}</p>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-500 mb-1">Nombre</label>
-                <p className="text-gray-900">{unidad.nombre}</p>
+                <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">Nombre</label>
+                <p className="text-gray-900 dark:text-gray-100">{unidad.nombre}</p>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-500 mb-1">Razón Social</label>
-                <p className="text-gray-900">{unidad.razonSocial}</p>
+                <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">Razón Social</label>
+                <p className="text-gray-900 dark:text-gray-100">{unidad.razonSocial}</p>
               </div>
               <div className="md:col-span-2">
-                <label className="block text-sm font-medium text-gray-500 mb-1">Dirección</label>
-                <p className="text-gray-900">{unidad.direccion}</p>
+                <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">Dirección</label>
+                <p className="text-gray-900 dark:text-gray-100">{unidad.direccion}</p>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-500 mb-1">Distrito</label>
-                <p className="text-gray-900">{unidad.distrito}</p>
+                <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">Distrito</label>
+                <p className="text-gray-900 dark:text-gray-100">{unidad.distrito}</p>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-500 mb-1">Email</label>
-                <p className="text-gray-900">{unidad.email || '-'}</p>
+                <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">Email</label>
+                <p className="text-gray-900 dark:text-gray-100">{unidad.email || '-'}</p>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-500 mb-1">Fase de Actividad</label>
-                <p className="text-gray-900">{unidad.faseActividad}</p>
+                <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">Fase de Actividad</label>
+                <p className="text-gray-900 dark:text-gray-100">{unidad.faseActividad}</p>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-500 mb-1">Coordenadas (X, Y)</label>
-                <p className="text-gray-900">{unidad.x && unidad.y ? `${unidad.x}, ${unidad.y}` : '-'}</p>
+                <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">Coordenadas (X, Y)</label>
+                <p className="text-gray-900 dark:text-gray-100">{unidad.x && unidad.y ? `${unidad.x}, ${unidad.y}` : '-'}</p>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-500 mb-1">MSNM</label>
-                <p className="text-gray-900">{unidad.msnm || '-'}</p>
+                <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">MSNM</label>
+                <p className="text-gray-900 dark:text-gray-100">{unidad.msnm || '-'}</p>
               </div>
             </div>
 
             {unidad.representanteLegal && (
               <>
-                <h2 className="text-lg font-semibold text-gray-900 border-b pb-2 mt-8">Representante Legal</h2>
+                <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 border-b pb-2 mt-8">Representante Legal</h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-500 mb-1">Nombre</label>
-                    <p className="text-gray-900">{unidad.representanteLegal.nombre}</p>
+                    <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">Nombre</label>
+                    <p className="text-gray-900 dark:text-gray-100">{unidad.representanteLegal.nombre}</p>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-500 mb-1">CI</label>
-                    <p className="text-gray-900 font-mono">{unidad.representanteLegal.ci}</p>
+                    <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">CI</label>
+                    <p className="text-gray-900 dark:text-gray-100 font-mono">{unidad.representanteLegal.ci}</p>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-500 mb-1">Teléfono</label>
-                    <p className="text-gray-900">{unidad.representanteLegal.telefono || '-'}</p>
+                    <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">Teléfono</label>
+                    <p className="text-gray-900 dark:text-gray-100">{unidad.representanteLegal.telefono || '-'}</p>
                   </div>
                 </div>
               </>
@@ -794,27 +794,27 @@ export default function ExpedienteDetallePage() {
 
         {activeTab === 'rubros' && (
           <div className="space-y-6">
-            <div className="bg-gray-50 p-4 rounded-xl">
-              <h3 className="font-semibold text-gray-900 mb-3">Agregar Rubro de Actividad</h3>
+            <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-xl">
+              <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-3">Agregar Rubro de Actividad</h3>
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <input
                   type="text"
                   placeholder="Código CAEB"
                   value={nuevoRubro.codigoCaeb}
                   onChange={(e) => setNuevoRubro({ ...nuevoRubro, codigoCaeb: e.target.value })}
-                  className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                  className="px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                 />
                 <input
                   type="text"
                   placeholder="Descripción"
                   value={nuevoRubro.descripcion}
                   onChange={(e) => setNuevoRubro({ ...nuevoRubro, descripcion: e.target.value })}
-                  className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                  className="px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                 />
                 <select
                   value={nuevoRubro.categoria}
                   onChange={(e) => setNuevoRubro({ ...nuevoRubro, categoria: e.target.value })}
-                  className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                  className="px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                 >
                   <option value="">Categoría</option>
                   <option value="1">Categoría 1</option>
@@ -831,26 +831,26 @@ export default function ExpedienteDetallePage() {
               </div>
             </div>
 
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
+            <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+              <thead className="bg-gray-50 dark:bg-gray-700">
                 <tr>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Código</th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Descripción</th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Categoría</th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Acciones</th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Código</th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Descripción</th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Categoría</th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Acciones</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-200">
+              <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
                 {rubrosList.length === 0 ? (
-                  <tr><td colSpan={4} className="px-4 py-8 text-center text-gray-500">Sin rubros registrados</td></tr>
+                  <tr><td colSpan={4} className="px-4 py-8 text-center text-gray-500 dark:text-gray-400">Sin rubros registrados</td></tr>
                 ) : rubrosList.map((rubro: any) => (
-                  <tr key={rubro.id} className="hover:bg-gray-50">
+                  <tr key={rubro.id} className="hover:bg-gray-50 dark:bg-gray-700">
                     <td className="px-4 py-3 text-sm font-mono text-indigo-600">{rubro.codigoCaeb}</td>
-                    <td className="px-4 py-3 text-sm text-gray-900">{rubro.descripcion}</td>
+                    <td className="px-4 py-3 text-sm text-gray-900 dark:text-gray-100">{rubro.descripcion}</td>
                     <td className="px-4 py-3 text-sm">
                       <span className={`px-2 py-1 rounded-full text-xs font-semibold ${
                         rubro.categoria === 3 ? 'bg-rose-100 text-rose-800' :
-                        rubro.categoria === 2 ? 'bg-purple-100 text-purple-800' : 'bg-blue-100 text-blue-800'
+                        rubro.categoria === 2 ? 'bg-purple-100 dark:bg-purple-950 text-purple-800 dark:text-purple-300' : 'bg-blue-100 dark:bg-blue-950 text-blue-800 dark:text-blue-300'
                       }`}>Categoría {rubro.categoria}</span>
                     </td>
                     <td className="px-4 py-3 text-sm flex gap-2">
@@ -868,7 +868,7 @@ export default function ExpedienteDetallePage() {
           <div className="space-y-6">
             {!rai ? (
               <div className="text-center py-8">
-                <p className="text-gray-500 mb-4">No existe RAI para esta unidad industrial</p>
+                <p className="text-gray-500 dark:text-gray-400 mb-4">No existe RAI para esta unidad industrial</p>
                 <button
                   onClick={crearRAI}
                   disabled={saving}
@@ -879,24 +879,24 @@ export default function ExpedienteDetallePage() {
               </div>
             ) : (
               <>
-                <div className="bg-gray-50 p-4 rounded-xl">
-                  <h3 className="font-semibold text-gray-900 mb-3">Registro Inicial RAI</h3>
+                <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-xl">
+                  <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-3">Registro Inicial RAI</h3>
                   {rai.registroInicial ? (
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                       <div>
-                        <label className="block text-sm font-medium text-gray-500">Fecha</label>
-                        <p className="text-gray-900">{formatDate(rai.registroInicial.fechaRegistro)}</p>
+                        <label className="block text-sm font-medium text-gray-500 dark:text-gray-400">Fecha</label>
+                        <p className="text-gray-900 dark:text-gray-100">{formatDate(rai.registroInicial.fechaRegistro)}</p>
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-500">Técnico</label>
-                        <p className="text-gray-900">{rai.registroInicial.tecnicoDesignado}</p>
+                        <label className="block text-sm font-medium text-gray-500 dark:text-gray-400">Técnico</label>
+                        <p className="text-gray-900 dark:text-gray-100">{rai.registroInicial.tecnicoDesignado}</p>
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-500">Existe Archivo</label>
-                        <p className="text-gray-900">{rai.registroInicial.existeEnArchivo ? 'Sí' : 'No'}</p>
+                        <label className="block text-sm font-medium text-gray-500 dark:text-gray-400">Existe Archivo</label>
+                        <p className="text-gray-900 dark:text-gray-100">{rai.registroInicial.existeEnArchivo ? 'Sí' : 'No'}</p>
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-500">Documento</label>
+                        <label className="block text-sm font-medium text-gray-500 dark:text-gray-400">Documento</label>
                         {rai.registroInicial.documentoKey ? (
                           <span className="text-emerald-600">✓ Documento subido</span>
                         ) : (
@@ -911,52 +911,52 @@ export default function ExpedienteDetallePage() {
                     </div>
                   ) : (
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                      <input type="date" value={registroInicial.fechaRegistro} onChange={(e) => setRegistroInicial({...registroInicial, fechaRegistro: e.target.value})} className="px-3 py-2 border border-gray-300 rounded-lg" />
-                      <input type="text" placeholder="Técnico designado" value={registroInicial.tecnicoDesignado} onChange={(e) => setRegistroInicial({...registroInicial, tecnicoDesignado: e.target.value})} className="px-3 py-2 border border-gray-300 rounded-lg" />
+                      <input type="date" value={registroInicial.fechaRegistro} onChange={(e) => setRegistroInicial({...registroInicial, fechaRegistro: e.target.value})} className="px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg" />
+                      <input type="text" placeholder="Técnico designado" value={registroInicial.tecnicoDesignado} onChange={(e) => setRegistroInicial({...registroInicial, tecnicoDesignado: e.target.value})} className="px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg" />
                       <button onClick={handleAddRegistroInicial} disabled={saving} className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 disabled:bg-indigo-300">Guardar</button>
                     </div>
                   )}
                 </div>
 
-                <div className="bg-gray-50 p-4 rounded-xl">
-                  <h3 className="font-semibold text-gray-900 mb-3">Agregar Historial RAI</h3>
+                <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-xl">
+                  <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-3">Agregar Historial RAI</h3>
                   <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-                    <select value={nuevoHistorial.estado} onChange={(e) => setNuevoHistorial({...nuevoHistorial, estado: e.target.value})} className="px-3 py-2 border border-gray-300 rounded-lg">
+                    <select value={nuevoHistorial.estado} onChange={(e) => setNuevoHistorial({...nuevoHistorial, estado: e.target.value})} className="px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg">
                       <option value="">Estado</option>
                       {ESTADOS_RAI.map(e => <option key={e} value={e}>{e.replace('_', ' ')}</option>)}
                     </select>
-                    <input type="text" placeholder="Causa/Razón" value={nuevoHistorial.causaRazon} onChange={(e) => setNuevoHistorial({...nuevoHistorial, causaRazon: e.target.value})} className="px-3 py-2 border border-gray-300 rounded-lg" />
-                    <input type="date" value={nuevoHistorial.fechaRegistro} onChange={(e) => setNuevoHistorial({...nuevoHistorial, fechaRegistro: e.target.value})} className="px-3 py-2 border border-gray-300 rounded-lg" />
-                    <input type="text" placeholder="Técnico" value={nuevoHistorial.tecnicoDesignado} onChange={(e) => setNuevoHistorial({...nuevoHistorial, tecnicoDesignado: e.target.value})} className="px-3 py-2 border border-gray-300 rounded-lg" />
+                    <input type="text" placeholder="Causa/Razón" value={nuevoHistorial.causaRazon} onChange={(e) => setNuevoHistorial({...nuevoHistorial, causaRazon: e.target.value})} className="px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg" />
+                    <input type="date" value={nuevoHistorial.fechaRegistro} onChange={(e) => setNuevoHistorial({...nuevoHistorial, fechaRegistro: e.target.value})} className="px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg" />
+                    <input type="text" placeholder="Técnico" value={nuevoHistorial.tecnicoDesignado} onChange={(e) => setNuevoHistorial({...nuevoHistorial, tecnicoDesignado: e.target.value})} className="px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg" />
                     <button onClick={handleAddHistorial} disabled={saving} className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 disabled:bg-indigo-300">Agregar</button>
                   </div>
                 </div>
 
-                <table className="min-w-full divide-y divide-gray-200">
-                  <thead className="bg-gray-50">
+                <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                  <thead className="bg-gray-50 dark:bg-gray-700">
                     <tr>
-                      <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Estado</th>
-                      <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Causa/Razón</th>
-                      <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Fecha</th>
-                      <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Técnico</th>
-                      <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Documento</th>
-                      <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Acciones</th>
+                      <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Estado</th>
+                      <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Causa/Razón</th>
+                      <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Fecha</th>
+                      <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Técnico</th>
+                      <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Documento</th>
+                      <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Acciones</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-gray-200">
+                  <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
                     {(!rai.historial || rai.historial.length === 0) ? (
-                      <tr><td colSpan={6} className="px-4 py-8 text-center text-gray-500">Sin historial</td></tr>
+                      <tr><td colSpan={6} className="px-4 py-8 text-center text-gray-500 dark:text-gray-400">Sin historial</td></tr>
                     ) : rai.historial.map((h: any) => (
-                      <tr key={h.id} className="hover:bg-gray-50">
+                      <tr key={h.id} className="hover:bg-gray-50 dark:bg-gray-700">
                         <td className="px-4 py-3 text-sm">
                           <span className={`px-2 py-1 rounded-full text-xs font-semibold ${
-                            h.estado === 'RENOVACION' ? 'bg-emerald-100 text-emerald-800' :
-                            h.estado === 'MODIFICACION' ? 'bg-amber-100 text-amber-800' : 'bg-blue-100 text-blue-800'
+                            h.estado === 'RENOVACION' ? 'bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300' :
+                            h.estado === 'MODIFICACION' ? 'bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300' : 'bg-blue-100 dark:bg-blue-950 text-blue-800 dark:text-blue-300'
                           }`}>{h.estado}</span>
                         </td>
-                        <td className="px-4 py-3 text-sm text-gray-900">{h.causaRazon}</td>
-                        <td className="px-4 py-3 text-sm text-gray-600">{formatDate(h.fechaRegistro)}</td>
-                        <td className="px-4 py-3 text-sm text-gray-600">{h.tecnicoDesignado}</td>
+                        <td className="px-4 py-3 text-sm text-gray-900 dark:text-gray-100">{h.causaRazon}</td>
+                        <td className="px-4 py-3 text-sm text-gray-600 dark:text-gray-400">{formatDate(h.fechaRegistro)}</td>
+                        <td className="px-4 py-3 text-sm text-gray-600 dark:text-gray-400">{h.tecnicoDesignado}</td>
                         <td className="px-4 py-3 text-sm">
                           {h.documentoKey ? (
                             <span className="text-emerald-600">✓</span>
@@ -979,47 +979,47 @@ export default function ExpedienteDetallePage() {
 
         {activeTab === 'irap-cat3' && (
           <div className="space-y-6">
-            <div className="bg-gray-50 p-4 rounded-xl">
-              <h3 className="font-semibold text-gray-900 mb-3">Nuevo IRAP Categoría 3</h3>
+            <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-xl">
+              <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-3">Nuevo IRAP Categoría 3</h3>
               <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-                <select value={nuevoIrapCat3.documentoAmbiental} onChange={(e) => setNuevoIrapCat3({...nuevoIrapCat3, documentoAmbiental: e.target.value})} className="px-3 py-2 border border-gray-300 rounded-lg">
+                <select value={nuevoIrapCat3.documentoAmbiental} onChange={(e) => setNuevoIrapCat3({...nuevoIrapCat3, documentoAmbiental: e.target.value})} className="px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg">
                   {TIPOS_IRAP_CAT3.map(t => <option key={t} value={t}>{t}</option>)}
                 </select>
-                <input type="date" value={nuevoIrapCat3.fechaInforme} onChange={(e) => setNuevoIrapCat3({...nuevoIrapCat3, fechaInforme: e.target.value})} className="px-3 py-2 border border-gray-300 rounded-lg" />
-                <select value={nuevoIrapCat3.estado} onChange={(e) => setNuevoIrapCat3({...nuevoIrapCat3, estado: e.target.value})} className="px-3 py-2 border border-gray-300 rounded-lg">
+                <input type="date" value={nuevoIrapCat3.fechaInforme} onChange={(e) => setNuevoIrapCat3({...nuevoIrapCat3, fechaInforme: e.target.value})} className="px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg" />
+                <select value={nuevoIrapCat3.estado} onChange={(e) => setNuevoIrapCat3({...nuevoIrapCat3, estado: e.target.value})} className="px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg">
                   {ESTADOS_DOC.map(e => <option key={e} value={e}>{e.replace('_', ' ')}</option>)}
                 </select>
-                <input type="text" placeholder="Técnico" value={nuevoIrapCat3.tecnicoDesignado} onChange={(e) => setNuevoIrapCat3({...nuevoIrapCat3, tecnicoDesignado: e.target.value})} className="px-3 py-2 border border-gray-300 rounded-lg" />
+                <input type="text" placeholder="Técnico" value={nuevoIrapCat3.tecnicoDesignado} onChange={(e) => setNuevoIrapCat3({...nuevoIrapCat3, tecnicoDesignado: e.target.value})} className="px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg" />
                 <button onClick={handleAddIrapCat3} disabled={saving} className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 disabled:bg-indigo-300">Agregar</button>
               </div>
             </div>
 
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
+            <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+              <thead className="bg-gray-50 dark:bg-gray-700">
                 <tr>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Tipo</th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Fecha</th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Estado</th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Certificado</th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Técnico</th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Acciones</th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Tipo</th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Fecha</th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Estado</th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Certificado</th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Técnico</th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Acciones</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-200">
+              <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
                 {irapCat3Data.length === 0 ? (
-                  <tr><td colSpan={6} className="px-4 py-8 text-center text-gray-500">Sin registros</td></tr>
+                  <tr><td colSpan={6} className="px-4 py-8 text-center text-gray-500 dark:text-gray-400">Sin registros</td></tr>
                 ) : irapCat3Data.map((item: any) => (
-                  <tr key={item.id} className="hover:bg-gray-50">
+                  <tr key={item.id} className="hover:bg-gray-50 dark:bg-gray-700">
                     <td className="px-4 py-3 text-sm font-semibold text-indigo-600">{item.documentoAmbiental}</td>
-                    <td className="px-4 py-3 text-sm text-gray-600">{formatDate(item.fechaInforme)}</td>
+                    <td className="px-4 py-3 text-sm text-gray-600 dark:text-gray-400">{formatDate(item.fechaInforme)}</td>
                     <td className="px-4 py-3 text-sm">
                       <span className={`px-2 py-1 rounded-full text-xs font-semibold ${
-                        item.estado === 'APROBADO' ? 'bg-emerald-100 text-emerald-800' :
-                        item.estado === 'RECHAZADO' ? 'bg-red-100 text-red-800' : 'bg-amber-100 text-amber-800'
+                        item.estado === 'APROBADO' ? 'bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300' :
+                        item.estado === 'RECHAZADO' ? 'bg-red-100 dark:bg-red-950 text-red-800 dark:text-red-300' : 'bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300'
                       }`}>{item.estado}</span>
                     </td>
-                    <td className="px-4 py-3 text-sm text-gray-600">{item.certificadoAprobacion || '-'}</td>
-                    <td className="px-4 py-3 text-sm text-gray-600">{item.tecnicoDesignado}</td>
+                    <td className="px-4 py-3 text-sm text-gray-600 dark:text-gray-400">{item.certificadoAprobacion || '-'}</td>
+                    <td className="px-4 py-3 text-sm text-gray-600 dark:text-gray-400">{item.tecnicoDesignado}</td>
                     <td className="px-4 py-3 text-sm flex gap-2">
                       <button onClick={() => openEditIrapCat3(item)} className="text-indigo-600 hover:text-indigo-800">Editar</button>
                       <button onClick={() => handleDeleteIrapCat3(item.id, item.fechaInforme)} className="text-red-600 hover:text-red-800">Eliminar</button>
@@ -1033,48 +1033,48 @@ export default function ExpedienteDetallePage() {
 
         {activeTab === 'irap-cat12' && (
           <div className="space-y-6">
-            <div className="bg-gray-50 p-4 rounded-xl">
-              <h3 className="font-semibold text-gray-900 mb-3">Nuevo IRAP Categoría 1-2</h3>
+            <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-xl">
+              <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-3">Nuevo IRAP Categoría 1-2</h3>
               <div className="grid grid-cols-1 md:grid-cols-6 gap-4">
-                <select value={nuevoIrapCat12.documentoAmbiental} onChange={(e) => setNuevoIrapCat12({...nuevoIrapCat12, documentoAmbiental: e.target.value})} className="px-3 py-2 border border-gray-300 rounded-lg">
+                <select value={nuevoIrapCat12.documentoAmbiental} onChange={(e) => setNuevoIrapCat12({...nuevoIrapCat12, documentoAmbiental: e.target.value})} className="px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg">
                   {TIPOS_IRAP_CAT12.map(t => <option key={t} value={t}>{t}</option>)}
                 </select>
-                <input type="date" value={nuevoIrapCat12.fechaInforme} onChange={(e) => setNuevoIrapCat12({...nuevoIrapCat12, fechaInforme: e.target.value})} className="px-3 py-2 border border-gray-300 rounded-lg" />
-                <select value={nuevoIrapCat12.estado} onChange={(e) => setNuevoIrapCat12({...nuevoIrapCat12, estado: e.target.value})} className="px-3 py-2 border border-gray-300 rounded-lg">
+                <input type="date" value={nuevoIrapCat12.fechaInforme} onChange={(e) => setNuevoIrapCat12({...nuevoIrapCat12, fechaInforme: e.target.value})} className="px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg" />
+                <select value={nuevoIrapCat12.estado} onChange={(e) => setNuevoIrapCat12({...nuevoIrapCat12, estado: e.target.value})} className="px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg">
                   {ESTADOS_DOC.map(e => <option key={e} value={e}>{e.replace('_', ' ')}</option>)}
                 </select>
-                <input type="text" placeholder="DAA" value={nuevoIrapCat12.daa} onChange={(e) => setNuevoIrapCat12({...nuevoIrapCat12, daa: e.target.value})} className="px-3 py-2 border border-gray-300 rounded-lg" />
-                <input type="text" placeholder="Técnico" value={nuevoIrapCat12.tecnicoDesignado} onChange={(e) => setNuevoIrapCat12({...nuevoIrapCat12, tecnicoDesignado: e.target.value})} className="px-3 py-2 border border-gray-300 rounded-lg" />
+                <input type="text" placeholder="DAA" value={nuevoIrapCat12.daa} onChange={(e) => setNuevoIrapCat12({...nuevoIrapCat12, daa: e.target.value})} className="px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg" />
+                <input type="text" placeholder="Técnico" value={nuevoIrapCat12.tecnicoDesignado} onChange={(e) => setNuevoIrapCat12({...nuevoIrapCat12, tecnicoDesignado: e.target.value})} className="px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg" />
                 <button onClick={handleAddIrapCat12} disabled={saving} className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 disabled:bg-indigo-300">Agregar</button>
               </div>
             </div>
 
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
+            <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+              <thead className="bg-gray-50 dark:bg-gray-700">
                 <tr>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Tipo</th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Fecha</th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Estado</th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">DAA</th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Técnico</th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Acciones</th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Tipo</th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Fecha</th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Estado</th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">DAA</th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Técnico</th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Acciones</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-200">
+              <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
                 {irapCat12Data.length === 0 ? (
-                  <tr><td colSpan={6} className="px-4 py-8 text-center text-gray-500">Sin registros</td></tr>
+                  <tr><td colSpan={6} className="px-4 py-8 text-center text-gray-500 dark:text-gray-400">Sin registros</td></tr>
                 ) : irapCat12Data.map((item: any) => (
-                  <tr key={item.id} className="hover:bg-gray-50">
+                  <tr key={item.id} className="hover:bg-gray-50 dark:bg-gray-700">
                     <td className="px-4 py-3 text-sm font-semibold text-indigo-600">{item.documentoAmbiental}</td>
-                    <td className="px-4 py-3 text-sm text-gray-600">{formatDate(item.fechaInforme)}</td>
+                    <td className="px-4 py-3 text-sm text-gray-600 dark:text-gray-400">{formatDate(item.fechaInforme)}</td>
                     <td className="px-4 py-3 text-sm">
                       <span className={`px-2 py-1 rounded-full text-xs font-semibold ${
-                        item.estado === 'APROBADO' ? 'bg-emerald-100 text-emerald-800' :
-                        item.estado === 'RECHAZADO' ? 'bg-red-100 text-red-800' : 'bg-amber-100 text-amber-800'
+                        item.estado === 'APROBADO' ? 'bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300' :
+                        item.estado === 'RECHAZADO' ? 'bg-red-100 dark:bg-red-950 text-red-800 dark:text-red-300' : 'bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300'
                       }`}>{item.estado}</span>
                     </td>
-                    <td className="px-4 py-3 text-sm text-gray-600">{item.daa || '-'}</td>
-                    <td className="px-4 py-3 text-sm text-gray-600">{item.tecnicoDesignado}</td>
+                    <td className="px-4 py-3 text-sm text-gray-600 dark:text-gray-400">{item.daa || '-'}</td>
+                    <td className="px-4 py-3 text-sm text-gray-600 dark:text-gray-400">{item.tecnicoDesignado}</td>
                     <td className="px-4 py-3 text-sm flex gap-2">
                       <button onClick={() => openEditIrapCat12(item)} className="text-indigo-600 hover:text-indigo-800">Editar</button>
                       <button onClick={() => handleDeleteIrapCat12(item.id, item.fechaInforme)} className="text-red-600 hover:text-red-800">Eliminar</button>
@@ -1088,17 +1088,17 @@ export default function ExpedienteDetallePage() {
 
         {activeTab === 'informes' && (
           <div className="space-y-6">
-            <div className="bg-gray-50 p-4 rounded-xl">
-              <h3 className="font-semibold text-gray-900 mb-3">Nuevo Informe Ambiental Anual</h3>
+            <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-xl">
+              <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-3">Nuevo Informe Ambiental Anual</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                 <div className="grid grid-cols-2 gap-4">
-                  <input type="number" placeholder="Gestión (año)" value={nuevoInforme.gestion} onChange={(e) => setNuevoInforme({...nuevoInforme, gestion: e.target.value})} className="px-3 py-2 border border-gray-300 rounded-lg" min="2000" max="2100" />
-                  <input type="date" value={nuevoInforme.fechaInforme} onChange={(e) => setNuevoInforme({...nuevoInforme, fechaInforme: e.target.value})} className="px-3 py-2 border border-gray-300 rounded-lg" />
+                  <input type="number" placeholder="Gestión (año)" value={nuevoInforme.gestion} onChange={(e) => setNuevoInforme({...nuevoInforme, gestion: e.target.value})} className="px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg" min="2000" max="2100" />
+                  <input type="date" value={nuevoInforme.fechaInforme} onChange={(e) => setNuevoInforme({...nuevoInforme, fechaInforme: e.target.value})} className="px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg" />
                 </div>
-                <input type="text" placeholder="Técnico designado" value={nuevoInforme.tecnicoDesignado} onChange={(e) => setNuevoInforme({...nuevoInforme, tecnicoDesignado: e.target.value})} className="px-3 py-2 border border-gray-300 rounded-lg" />
+                <input type="text" placeholder="Técnico designado" value={nuevoInforme.tecnicoDesignado} onChange={(e) => setNuevoInforme({...nuevoInforme, tecnicoDesignado: e.target.value})} className="px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg" />
               </div>
               <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 mb-2">Monitoreos Realizados</label>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Monitoreos Realizados</label>
                 <div className="flex flex-wrap gap-2">
                   {MONITOREOS.map(m => (
                     <button
@@ -1108,7 +1108,7 @@ export default function ExpedienteDetallePage() {
                       className={`px-3 py-1 rounded-full text-sm transition-colors ${
                         nuevoInforme.monitoreos.includes(m)
                           ? 'bg-indigo-600 text-white'
-                          : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                          : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300'
                       }`}
                     >
                       {m}
@@ -1121,30 +1121,30 @@ export default function ExpedienteDetallePage() {
               </button>
             </div>
 
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
+            <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+              <thead className="bg-gray-50 dark:bg-gray-700">
                 <tr>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Gestión</th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Fecha</th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Monitoreos</th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Técnico</th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Gestión</th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Fecha</th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Monitoreos</th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Técnico</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-200">
+              <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
                 {informesData.length === 0 ? (
-                  <tr><td colSpan={4} className="px-4 py-8 text-center text-gray-500">Sin informes</td></tr>
+                  <tr><td colSpan={4} className="px-4 py-8 text-center text-gray-500 dark:text-gray-400">Sin informes</td></tr>
                 ) : informesData.map((item: any) => (
-                  <tr key={item.id} className="hover:bg-gray-50">
+                  <tr key={item.id} className="hover:bg-gray-50 dark:bg-gray-700">
                     <td className="px-4 py-3 text-sm font-bold text-indigo-600">{item.gestion}</td>
-                    <td className="px-4 py-3 text-sm text-gray-600">{formatDate(item.fechaInforme)}</td>
+                    <td className="px-4 py-3 text-sm text-gray-600 dark:text-gray-400">{formatDate(item.fechaInforme)}</td>
                     <td className="px-4 py-3 text-sm">
                       <div className="flex flex-wrap gap-1">
                         {(item.monitoreos || []).map((m: string, i: number) => (
-                          <span key={i} className="bg-gray-100 text-gray-700 px-2 py-0.5 rounded text-xs">{m}</span>
+                          <span key={i} className="bg-gray-100 dark:bg-gray-900 text-gray-700 dark:text-gray-300 px-2 py-0.5 rounded text-xs">{m}</span>
                         ))}
                       </div>
                     </td>
-                    <td className="px-4 py-3 text-sm text-gray-600">{item.tecnicoDesignado}</td>
+                    <td className="px-4 py-3 text-sm text-gray-600 dark:text-gray-400">{item.tecnicoDesignado}</td>
                     <td className="px-4 py-3 text-sm flex gap-2">
                       <button onClick={() => openEditInforme(item)} className="text-indigo-600 hover:text-indigo-800">Editar</button>
                       <button onClick={() => handleDeleteInforme(item.id, `${item.gestion} - ${item.fechaInforme}`)} className="text-red-600 hover:text-red-800">Eliminar</button>

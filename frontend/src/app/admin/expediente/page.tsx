@@ -132,21 +132,21 @@ export default function ExpedientePage() {
 
   const getEstadoBadge = (estado: string) => {
     const styles: Record<string, { class: string; label: string }> = {
-      VIGENTE: { class: 'bg-emerald-100 text-emerald-800 border border-emerald-200', label: 'VIGENTE' },
-      INACTIVO: { class: 'bg-red-100 text-red-800 border border-red-200', label: 'INACTIVO' },
-      PENDIENTE: { class: 'bg-amber-100 text-amber-800 border border-amber-200', label: 'PENDIENTE' },
+      VIGENTE: { class: 'bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-200', label: 'VIGENTE' },
+      INACTIVO: { class: 'bg-red-100 dark:bg-red-950 text-red-800 dark:text-red-300 border border-red-200', label: 'INACTIVO' },
+      PENDIENTE: { class: 'bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 border border-amber-200', label: 'PENDIENTE' },
     };
-    const style = styles[estado] || { class: 'bg-gray-100 text-gray-800 border border-gray-200', label: estado };
+    const style = styles[estado] || { class: 'bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-100 border border-gray-200 dark:border-gray-700', label: estado };
     return <span className={`px-3 py-1 rounded-full text-xs font-semibold ${style.class}`}>{style.label}</span>;
   };
 
   const getCategoriaBadge = (categoria: number) => {
     const styles: Record<number, { class: string; label: string }> = {
-      1: { class: 'bg-blue-100 text-blue-800 border border-blue-200', label: 'Categoría 1' },
-      2: { class: 'bg-purple-100 text-purple-800 border border-purple-200', label: 'Categoría 2' },
+      1: { class: 'bg-blue-100 dark:bg-blue-950 text-blue-800 dark:text-blue-300 border border-blue-200', label: 'Categoría 1' },
+      2: { class: 'bg-purple-100 dark:bg-purple-950 text-purple-800 dark:text-purple-300 border border-purple-200', label: 'Categoría 2' },
       3: { class: 'bg-rose-100 text-rose-800 border border-rose-200', label: 'Categoría 3' },
     };
-    const style = styles[categoria] || { class: 'bg-gray-100 text-gray-800', label: `Categoría ${categoria}` };
+    const style = styles[categoria] || { class: 'bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-100', label: `Categoría ${categoria}` };
     return <span className={`px-3 py-1 rounded-full text-xs font-semibold ${style.class}`}>{style.label}</span>;
   };
 
@@ -154,8 +154,8 @@ export default function ExpedientePage() {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Expediente Ambiental</h1>
-          <p className="text-gray-500 mt-1">Gestión de unidades industriales</p>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Expediente Ambiental</h1>
+          <p className="text-gray-500 dark:text-gray-400 mt-1">Gestión de unidades industriales</p>
         </div>
         <Link
           href="/admin/expediente/nuevo"
@@ -172,7 +172,7 @@ export default function ExpedientePage() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Buscar por código RAI, nombre o razón social..."
-            className="w-full px-4 py-3 pl-11 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent shadow-sm"
+            className="w-full px-4 py-3 pl-11 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent shadow-sm"
           />
           <svg className="w-5 h-5 text-gray-400 absolute left-4 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -192,24 +192,24 @@ export default function ExpedientePage() {
         </div>
       )}
 
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
+          <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+            <thead className="bg-gray-50 dark:bg-gray-700">
               <tr>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Código RAI</th>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Nombre</th>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Razón Social</th>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Estado</th>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Categoría</th>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Acciones</th>
+                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Código RAI</th>
+                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Nombre</th>
+                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Razón Social</th>
+                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Estado</th>
+                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Categoría</th>
+                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Acciones</th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
+            <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
               {loading ? (
                 <tr>
                   <td colSpan={6} className="px-6 py-12 text-center">
-                    <div className="flex justify-center items-center gap-3 text-gray-500">
+                    <div className="flex justify-center items-center gap-3 text-gray-500 dark:text-gray-400">
                       <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
@@ -220,7 +220,7 @@ export default function ExpedientePage() {
                 </tr>
               ) : unidades.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="px-6 py-12 text-center text-gray-500">
+                  <td colSpan={6} className="px-6 py-12 text-center text-gray-500 dark:text-gray-400">
                     <svg className="mx-auto h-12 w-12 text-gray-400 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                     </svg>
@@ -229,16 +229,16 @@ export default function ExpedientePage() {
                 </tr>
               ) : (
                 unidades.map((unidad) => (
-                  <tr key={unidad.id} className="hover:bg-gray-50 transition-colors">
+                  <tr key={unidad.id} className="hover:bg-gray-50 dark:bg-gray-700 transition-colors">
                     <td className="px-6 py-4 whitespace-nowrap">
                       <span className="font-mono text-sm font-medium text-indigo-600 bg-indigo-50 px-2 py-1 rounded">
                         {unidad.codigoRai}
                       </span>
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-900 font-medium">
+                    <td className="px-6 py-4 text-sm text-gray-900 dark:text-gray-100 font-medium">
                       {unidad.nombre}
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-600">
+                    <td className="px-6 py-4 text-sm text-gray-600 dark:text-gray-400">
                       {unidad.razonSocial}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
@@ -266,7 +266,7 @@ export default function ExpedientePage() {
                       )}
                       <Link
                         href={`/admin/expediente/${unidad.id}`}
-                        className="text-gray-600 hover:text-gray-900 font-medium"
+                        className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:text-gray-100 font-medium"
                       >
                         Ver
                       </Link>
@@ -281,12 +281,12 @@ export default function ExpedientePage() {
 
       {showEditModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="sticky top-0 bg-white border-b px-6 py-4 flex justify-between items-center">
-              <h2 className="text-xl font-bold text-gray-800">Editar Unidad Industrial</h2>
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="sticky top-0 bg-white dark:bg-gray-800 border-b px-6 py-4 flex justify-between items-center">
+              <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100">Editar Unidad Industrial</h2>
               <button
                 onClick={() => setShowEditModal(false)}
-                className="text-gray-500 hover:text-gray-700 text-2xl leading-none"
+                className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:text-gray-300 text-2xl leading-none"
               >
                 ×
               </button>
@@ -294,14 +294,14 @@ export default function ExpedientePage() {
 
             <form onSubmit={handleEditSubmit} className="p-6 space-y-6">
               {editError && (
-                <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+                <div className="bg-red-100 dark:bg-red-950 border border-red-400 dark:border-red-800 text-red-700 dark:text-red-300 px-4 py-3 rounded">
                   {editError}
                 </div>
               )}
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Código RAI *
                   </label>
                   <input
@@ -310,12 +310,12 @@ export default function ExpedientePage() {
                     value={formData.codigoRai}
                     onChange={handleEditChange}
                     required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Nombre *
                   </label>
                   <input
@@ -324,12 +324,12 @@ export default function ExpedientePage() {
                     value={formData.nombre}
                     onChange={handleEditChange}
                     required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Razón Social *
                   </label>
                   <input
@@ -338,12 +338,12 @@ export default function ExpedientePage() {
                     value={formData.razonSocial}
                     onChange={handleEditChange}
                     required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Dirección *
                   </label>
                   <input
@@ -352,12 +352,12 @@ export default function ExpedientePage() {
                     value={formData.direccion}
                     onChange={handleEditChange}
                     required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Distrito *
                   </label>
                   <input
@@ -367,12 +367,12 @@ export default function ExpedientePage() {
                     onChange={handleEditChange}
                     required
                     min="1"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Email (opcional)
                   </label>
                   <input
@@ -380,16 +380,16 @@ export default function ExpedientePage() {
                     name="email"
                     value={formData.email}
                     onChange={handleEditChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                   />
                 </div>
               </div>
 
               <div className="border-t pt-6">
-                <h3 className="text-lg font-medium text-gray-800 mb-4">Representante Legal</h3>
+                <h3 className="text-lg font-medium text-gray-800 dark:text-gray-100 mb-4">Representante Legal</h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                       Nombre *
                     </label>
                     <input
@@ -398,12 +398,12 @@ export default function ExpedientePage() {
                       value={formData.representanteNombre}
                       onChange={handleEditChange}
                       required
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                      className="w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                       CI *
                     </label>
                     <input
@@ -412,12 +412,12 @@ export default function ExpedientePage() {
                       value={formData.representanteCi}
                       onChange={handleEditChange}
                       required
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                      className="w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                       Teléfono *
                     </label>
                     <input
@@ -426,7 +426,7 @@ export default function ExpedientePage() {
                       value={formData.representanteTelefono}
                       onChange={handleEditChange}
                       required
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                      className="w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                     />
                   </div>
                 </div>
@@ -436,7 +436,7 @@ export default function ExpedientePage() {
                 <button
                   type="button"
                   onClick={() => setShowEditModal(false)}
-                  className="px-6 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                  className="px-6 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:bg-gray-700 transition-colors"
                 >
                   Cancelar
                 </button>
@@ -455,11 +455,11 @@ export default function ExpedientePage() {
 
       {deleteModal && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl shadow-xl max-w-md w-full p-6">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl max-w-md w-full p-6">
             <h3 className="text-lg font-semibold mb-2">Confirmar eliminación</h3>
-            <p className="text-gray-600 mb-6">¿Está seguro de eliminar la unidad <strong>{deleteModal.nombre}</strong>? Esta acción no se puede deshacer.</p>
+            <p className="text-gray-600 dark:text-gray-400 mb-6">¿Está seguro de eliminar la unidad <strong>{deleteModal.nombre}</strong>? Esta acción no se puede deshacer.</p>
             <div className="flex justify-end gap-3">
-              <button onClick={() => setDeleteModal(null)} className="px-4 py-2 border rounded-lg hover:bg-gray-50">Cancelar</button>
+              <button onClick={() => setDeleteModal(null)} className="px-4 py-2 border rounded-lg hover:bg-gray-50 dark:bg-gray-700">Cancelar</button>
               <button onClick={handleDelete} className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">Eliminar</button>
             </div>
           </div>

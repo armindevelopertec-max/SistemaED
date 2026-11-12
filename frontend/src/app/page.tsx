@@ -21,7 +21,7 @@ export default function Home() {
   }
 
   if (user.rol === 'ADMINISTRADOR') {
-    redirect('/admin/expediente');
+    redirect('/admin');
   }
 
   redirect('/visualizador');

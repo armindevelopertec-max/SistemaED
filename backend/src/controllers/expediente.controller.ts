@@ -31,7 +31,6 @@ import { Roles } from '../auth/decorators/roles.decorator';
 import { Role } from '@prisma/client';
 
 @Controller('expediente')
-@UseGuards(AuthGuardJwt, GuardRoles)
 export class ExpedienteController {
   constructor(private readonly expedienteService: ExpedienteService) {}
 

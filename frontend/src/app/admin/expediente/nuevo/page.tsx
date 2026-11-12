@@ -84,23 +84,23 @@ export default function NuevoExpedientePage() {
       <div className="flex items-center gap-4">
         <Link
           href="/admin/expediente"
-          className="text-gray-500 hover:text-gray-700"
+          className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:text-gray-300"
         >
           ← Volver
         </Link>
-        <h1 className="text-2xl font-bold text-gray-800">Nueva Unidad Industrial</h1>
+        <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100">Nueva Unidad Industrial</h1>
       </div>
 
       {error && (
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+        <div className="bg-red-100 dark:bg-red-950 border border-red-400 dark:border-red-800 text-red-700 dark:text-red-300 px-4 py-3 rounded">
           {error}
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow p-6 space-y-6">
+      <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-800 rounded-lg shadow p-6 space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Código RAI *
             </label>
             <input
@@ -109,12 +109,12 @@ export default function NuevoExpedientePage() {
               value={formData.codigoRai}
               onChange={handleChange}
               required
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+              className="w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Nombre *
             </label>
             <input
@@ -123,12 +123,12 @@ export default function NuevoExpedientePage() {
               value={formData.nombre}
               onChange={handleChange}
               required
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+              className="w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Razón Social *
             </label>
             <input
@@ -137,12 +137,12 @@ export default function NuevoExpedientePage() {
               value={formData.razonSocial}
               onChange={handleChange}
               required
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+              className="w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Dirección *
             </label>
             <input
@@ -151,12 +151,12 @@ export default function NuevoExpedientePage() {
               value={formData.direccion}
               onChange={handleChange}
               required
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+              className="w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Distrito *
             </label>
             <input
@@ -166,12 +166,12 @@ export default function NuevoExpedientePage() {
               onChange={handleChange}
               required
               min="1"
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+              className="w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Email (opcional)
             </label>
             <input
@@ -179,16 +179,16 @@ export default function NuevoExpedientePage() {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+              className="w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
             />
           </div>
         </div>
 
         <div className="border-t pt-6">
-          <h3 className="text-lg font-medium text-gray-800 mb-4">Representante Legal</h3>
+          <h3 className="text-lg font-medium text-gray-800 dark:text-gray-100 mb-4">Representante Legal</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Nombre *
               </label>
               <input
@@ -197,12 +197,12 @@ export default function NuevoExpedientePage() {
                 value={formData.representanteNombre}
                 onChange={handleChange}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                className="w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 CI *
               </label>
               <input
@@ -211,12 +211,12 @@ export default function NuevoExpedientePage() {
                 value={formData.representanteCi}
                 onChange={handleChange}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                className="w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Teléfono *
               </label>
               <input
@@ -225,22 +225,22 @@ export default function NuevoExpedientePage() {
                 value={formData.representanteTelefono}
                 onChange={handleChange}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                className="w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
               />
             </div>
           </div>
         </div>
 
         <div className="border-t pt-6">
-          <h3 className="text-lg font-medium text-gray-800 mb-4">Rubros CAEB</h3>
+          <h3 className="text-lg font-medium text-gray-800 dark:text-gray-100 mb-4">Rubros CAEB</h3>
 
           {rubros.length > 0 && (
             <div className="mb-4 space-y-2">
               {rubros.map((rubro, index) => (
-                <div key={index} className="flex items-center gap-4 bg-gray-50 p-3 rounded-lg">
+                <div key={index} className="flex items-center gap-4 bg-gray-50 dark:bg-gray-700 p-3 rounded-lg">
                   <span className="font-medium">{rubro.codigoCaeb}</span>
                   <span className="flex-1">{rubro.descripcion}</span>
-                  <span className="text-sm text-gray-500">{rubro.categoria}</span>
+                  <span className="text-sm text-gray-500 dark:text-gray-400">{rubro.categoria}</span>
                   <button
                     type="button"
                     onClick={() => handleRemoveRubro(index)}
@@ -255,38 +255,38 @@ export default function NuevoExpedientePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Código CAEB
               </label>
               <input
                 type="text"
                 value={nuevoRubro.codigoCaeb}
                 onChange={(e) => setNuevoRubro({ ...nuevoRubro, codigoCaeb: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                className="w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
               />
             </div>
 
             <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Descripción
               </label>
               <input
                 type="text"
                 value={nuevoRubro.descripcion}
                 onChange={(e) => setNuevoRubro({ ...nuevoRubro, descripcion: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                className="w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Categoría
               </label>
               <input
                 type="text"
                 value={nuevoRubro.categoria}
                 onChange={(e) => setNuevoRubro({ ...nuevoRubro, categoria: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                className="w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
               />
             </div>
           </div>
@@ -294,7 +294,7 @@ export default function NuevoExpedientePage() {
           <button
             type="button"
             onClick={handleAddRubro}
-            className="mt-3 bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors"
+            className="mt-3 bg-gray-100 dark:bg-gray-900 text-gray-700 dark:text-gray-300 px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors"
           >
             + Agregar Rubro
           </button>
@@ -303,7 +303,7 @@ export default function NuevoExpedientePage() {
         <div className="flex justify-end gap-4 pt-6 border-t">
           <Link
             href="/admin/expediente"
-            className="px-6 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+            className="px-6 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:bg-gray-700 transition-colors"
           >
             Cancelar
           </Link>
