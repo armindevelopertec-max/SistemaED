@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { expedienteService, reportesService } from '@/lib/api';
+import { nombreCategoria } from '@/lib/categorias';
 import { UnidadIndustrial } from '@/types';
 
 interface ReporteUnidades {
@@ -120,8 +121,9 @@ export default function AdminDashboard() {
   const getEstadoBadge = (estado: string) => {
     const styles: Record<string, { class: string; label: string }> = {
       VIGENTE: { class: 'bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800', label: 'VIGENTE' },
-      INACTIVO: { class: 'bg-red-100 dark:bg-red-950 text-red-800 dark:text-red-300 border border-red-200 dark:border-red-800', label: 'INACTIVO' },
-      PENDIENTE: { class: 'bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800', label: 'PENDIENTE' },
+      CADUCO: { class: 'bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800', label: 'CADUCO' },
+      ANULADO: { class: 'bg-red-100 dark:bg-red-950 text-red-800 dark:text-red-300 border border-red-200 dark:border-red-800', label: 'ANULADO' },
+      CIERRE: { class: 'bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-100 border border-gray-200 dark:border-gray-700', label: 'CIERRE' },
     };
     const style = styles[estado] || { class: 'bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-100 border border-gray-200 dark:border-gray-700', label: estado };
     return <span className={`px-3 py-1 rounded-full text-xs font-semibold ${style.class}`}>{style.label}</span>;
@@ -185,7 +187,7 @@ export default function AdminDashboard() {
               {reporteUnidades?.porCategoria.map((c) => (
                 <div key={c.categoria}>
                   <div className="flex justify-between text-sm mb-1">
-                    <span className="font-medium text-gray-700 dark:text-gray-300">Categoría {c.categoria}</span>
+                    <span className="font-medium text-gray-700 dark:text-gray-300">Categoría {nombreCategoria(c.categoria)}</span>
                     <span className="text-gray-500 dark:text-gray-400">{c.cantidad}</span>
                   </div>
                   <div className="h-2.5 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
@@ -316,7 +318,7 @@ export default function AdminDashboard() {
                       {unidad.razonSocial}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      {getEstadoBadge(unidad.estado || 'VIGENTE')}
+                      {getEstadoBadge(unidad.estadoRegistro || 'VIGENTE')}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm flex gap-4">
                       <Link href={`/admin/expediente/${unidad.id}`} className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 font-medium">

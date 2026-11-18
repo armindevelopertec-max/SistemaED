@@ -14,6 +14,7 @@ FRONTEND_DIR="$ROOT/frontend"
 
 info() { echo -e "\e[1;34m[INFO]\e[0m $1"; }
 ok()   { echo -e "\e[1;32m[OK]\e[0m   $1"; }
+warn() { echo -e "\e[1;33m[WARN]\e[0m $1"; }
 fail() { echo -e "\e[1;31m[ERROR]\e[0m $1"; exit 1; }
 
 # --------------------------------------------
@@ -22,6 +23,8 @@ fail() { echo -e "\e[1;31m[ERROR]\e[0m $1"; exit 1; }
 info "Verificando Cloudflared..."
 if systemctl is-active --quiet cloudflared-aam.service; then
     ok "Cloudflared ya está corriendo"
+elif ! systemctl list-unit-files 2>/dev/null | grep -q "^cloudflared-aam.service"; then
+    warn "cloudflared-aam.service no existe en este host - se continúa sin túnel público"
 else
     info "Iniciando Cloudflared (servicio systemd)..."
     sudo systemctl start cloudflared-aam.service || fail "No se pudo iniciar cloudflared"
@@ -35,7 +38,28 @@ fi
 # --------------------------------------------
 info "Levantando contenedores..."
 cd "$ROOT"
-podman-compose up -d postgres redis minio 2>&1 | tail -3 || fail "No se pudieron iniciar los contenedores"
+# Nombre de proyecto fijo: garantiza que los volumenes de datos siempre sean
+# los mismos (sistemaed_*), sin depender del nombre del directorio.
+podman-compose -p sistemaed up -d postgres redis minio 2>&1 | tail -3 || fail "No se pudieron iniciar los contenedores"
+
+# Readiness de un contenedor: debe estar running y, si define healthcheck,
+# estar healthy. Si no define healthcheck, se prueba el servicio por dentro.
+cont_ready() {
+    local c="$1" h
+    [ "$(podman inspect --format '{{.State.Status}}' "$c" 2>/dev/null)" = "running" ] || return 1
+    h=$(podman inspect --format '{{if .State.Health}}{{.State.Health.Status}}{{else}}none{{end}}' "$c" 2>/dev/null)
+    case "$h" in
+        healthy) return 0 ;;
+        none) ;;
+        *) return 1 ;;
+    esac
+    case "$c" in
+        smia_postgres) podman exec "$c" pg_isready -U smia_user -d smia_db >/dev/null 2>&1 ;;
+        smia_redis)    podman exec "$c" redis-cli ping 2>/dev/null | grep -q PONG ;;
+        smia_minio)    podman exec "$c" wget -q -O /dev/null http://localhost:9000/minio/health/live ;;
+        *) return 1 ;;
+    esac
+}
 
 for i in $(seq 1 60); do
     bad=0
@@ -43,8 +67,7 @@ for i in $(seq 1 60); do
         if ! podman ps -q -f name="^${c}$" | grep -q .; then
             bad=1; break
         fi
-        h=$(podman inspect --format '{{.State.Health.Status}}' "$c" 2>/dev/null || echo "unknown")
-        [ "$h" = "healthy" ] || { bad=1; break; }
+        cont_ready "$c" || { bad=1; break; }
     done
     if [ "$bad" -eq 0 ]; then
         ok "Contenedores healthy"
@@ -109,8 +132,13 @@ echo ""
 echo "==================================================="
 echo "  SMIA INICIADO"
 echo "==================================================="
-echo "  Frontend : https://smia.segtecam.space"
+echo "  Frontend : http://localhost:3002"
+echo "  Nginx    : http://localhost:8080"
 echo "  Backend  : http://localhost:3003"
 echo "  API Docs : http://localhost:3003/api/docs"
+echo "  MinIO    : http://localhost:9021"
+if systemctl is-active --quiet cloudflared-aam.service 2>/dev/null; then
+    echo "  Publico  : https://smia.segtecam.space"
+fi
 echo "==================================================="
 pm2 list

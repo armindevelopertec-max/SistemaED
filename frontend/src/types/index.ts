@@ -73,8 +73,12 @@ export interface UnidadIndustrial {
   direccion: string;
   distrito: number;
   email?: string;
-  estado: string;
-  categoria: number;
+  estadoRegistro: string;
+  categoriaFinal: number;
+  faseActividad?: string;
+  x?: number;
+  y?: number;
+  msnm?: number;
   representanteLegal: RepresentanteLegal;
   rubros: RubroCAEB[];
   createdAt: string;

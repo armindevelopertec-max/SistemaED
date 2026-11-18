@@ -71,9 +71,9 @@ export default function VisualizadorExpedientePage() {
                   <td className="px-4 py-3 text-sm text-gray-900 dark:text-gray-100">{unidad.razonSocial}</td>
                   <td className="px-4 py-3 text-sm">
                     <span className={`px-2 py-1 rounded-full text-xs font-semibold ${
-                      unidad.estado === 'VIGENTE' ? 'bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300' : 'bg-red-100 dark:bg-red-950 text-red-800 dark:text-red-300'
+                      unidad.estadoRegistro === 'VIGENTE' ? 'bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300' : 'bg-red-100 dark:bg-red-950 text-red-800 dark:text-red-300'
                     }`}>
-                      {unidad.estado}
+                      {unidad.estadoRegistro}
                     </span>
                   </td>
                   <td className="px-4 py-3 text-sm">

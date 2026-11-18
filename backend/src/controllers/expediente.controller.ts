@@ -17,6 +17,8 @@ import { ExpedienteService } from '../services/expediente.service';
 import {
   CreateUnidadIndustrialDto,
   UpdateUnidadIndustrialDto,
+  CreateRubroActividadDto,
+  UpdateRubroActividadDto,
 } from '../dto/expediente';
 import {
   CreateRAIRegistroInicialDto,
@@ -76,7 +78,7 @@ export class ExpedienteController {
   @Roles(Role.ADMINISTRADOR)
   async addRubroActividad(
     @Param('id', ParseIntPipe) unidadIndustrialId: number,
-    @Body() dto: any,
+    @Body() dto: CreateRubroActividadDto,
   ) {
     return this.expedienteService.addRubroActividad(unidadIndustrialId, dto);
   }
@@ -91,7 +93,7 @@ export class ExpedienteController {
   @Roles(Role.ADMINISTRADOR)
   async updateRubroActividad(
     @Param('id', ParseIntPipe) id: number,
-    @Body() dto: { codigoCaeb?: string; descripcion?: string; categoria?: number },
+    @Body() dto: UpdateRubroActividadDto,
   ) {
     return this.expedienteService.updateRubroActividad(id, dto);
   }

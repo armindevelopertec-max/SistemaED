@@ -1,4 +1,4 @@
-import { IsString, IsNumber, IsOptional, ValidateNested, IsArray } from 'class-validator';
+import { IsString, IsNumber, IsOptional, ValidateNested, IsArray, Min, Max, IsIn } from 'class-validator';
 import { Type } from 'class-transformer';
 
 class RepresentanteLegalDto {
@@ -25,6 +25,8 @@ class RubroActividadDto {
   descripcion?: string;
 
   @IsNumber()
+  @Min(1)
+  @Max(4)
   @IsOptional()
   categoria?: number;
 }
@@ -47,6 +49,8 @@ export class UpdateUnidadIndustrialDto {
   direccion?: string;
 
   @IsNumber()
+  @Min(1)
+  @Max(14)
   @IsOptional()
   distrito?: number;
 
@@ -71,10 +75,13 @@ export class UpdateUnidadIndustrialDto {
   faseActividad?: string;
 
   @IsString()
+  @IsIn(['VIGENTE', 'CADUCO', 'ANULADO', 'CIERRE'])
   @IsOptional()
   estadoRegistro?: string;
 
   @IsNumber()
+  @Min(1)
+  @Max(4)
   @IsOptional()
   categoriaFinal?: number;
 

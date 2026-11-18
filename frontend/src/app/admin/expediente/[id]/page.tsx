@@ -4,6 +4,9 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { expedienteService, authService } from '@/lib/api';
+import MapaCoordenadas from '@/components/MapaCoordenadas';
+import SelectorCategoria from '@/components/SelectorCategoria';
+import { nombreCategoria } from '@/lib/categorias';
 
 type TabType = 'identificacion' | 'rubros' | 'rai' | 'irap-cat3' | 'irap-cat12' | 'informes';
 
@@ -49,53 +52,7 @@ export default function ExpedienteDetallePage() {
 
   const [editModal, setEditModal] = useState<{type: string, data: any} | null>(null);
   const [editForm, setEditForm] = useState<any>({});
-  const [editUnidadForm, setEditUnidadForm] = useState<any>({});
-  const [editRepresentanteForm, setEditRepresentanteForm] = useState<any>({});
   const [deleteModal, setDeleteModal] = useState<{type: string, id: number, nombre: string} | null>(null);
-
-  const openEditUnidad = () => {
-    setEditUnidadForm({
-      nombre: unidad.nombre,
-      razonSocial: unidad.razonSocial,
-      direccion: unidad.direccion,
-      distrito: unidad.distrito,
-      email: unidad.email || '',
-      x: unidad.x || '',
-      y: unidad.y || '',
-      msnm: unidad.msnm || '',
-      faseActividad: unidad.faseActividad,
-      estadoRegistro: unidad.estadoRegistro,
-    });
-    if (unidad.representanteLegal) {
-      setEditRepresentanteForm({
-        nombre: unidad.representanteLegal.nombre,
-        ci: unidad.representanteLegal.ci,
-        telefono: unidad.representanteLegal.telefono || '',
-      });
-    }
-    setEditModal({ type: 'unidad', data: unidad });
-  };
-
-  const saveEditUnidad = async () => {
-    try {
-      setSaving(true);
-      await expedienteService.actualizarUnidadIndustrial(unidad.id, editUnidadForm);
-      if (unidad.representanteLegal) {
-        await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3003'}/api/expediente/unidades-industriales/${unidad.id}/representante`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(editRepresentanteForm),
-        });
-      }
-      setEditModal(null);
-      fetchUnidad();
-      showToast('success', 'Unidad industrial actualizada');
-    } catch (err) {
-      showToast('error', 'Error al actualizar unidad industrial');
-    } finally {
-      setSaving(false);
-    }
-  };
 
   const showToast = (type: 'success' | 'error', message: string) => {
     setToast({ type, message });
@@ -474,18 +431,17 @@ export default function ExpedienteDetallePage() {
               {editModal.type === 'informe' && 'Editar Informe Anual'}
               {editModal.type === 'historial' && 'Editar Historial RAI'}
               {editModal.type === 'registroInicial' && 'Editar Registro Inicial RAI'}
-              {editModal.type === 'unidad' && 'Editar Unidad Industrial'}
             </h3>
 
             {editModal.type === 'rubro' && (
               <div className="space-y-4">
                 <input type="text" value={editForm.codigoCaeb} onChange={(e) => setEditForm({...editForm, codigoCaeb: e.target.value})} className="w-full px-3 py-2 border rounded-lg" placeholder="Código CAEB" />
                 <input type="text" value={editForm.descripcion} onChange={(e) => setEditForm({...editForm, descripcion: e.target.value})} className="w-full px-3 py-2 border rounded-lg" placeholder="Descripción" />
-                <select value={editForm.categoria} onChange={(e) => setEditForm({...editForm, categoria: e.target.value})} className="w-full px-3 py-2 border rounded-lg">
-                  <option value="1">Categoría 1</option>
-                  <option value="2">Categoría 2</option>
-                  <option value="3">Categoría 3</option>
-                </select>
+                <SelectorCategoria
+                  value={editForm.categoria || ''}
+                  onChange={(valor) => setEditForm({...editForm, categoria: valor})}
+                  className="w-full px-3 py-2 border rounded-lg"
+                />
               </div>
             )}
 
@@ -562,68 +518,6 @@ export default function ExpedienteDetallePage() {
               </div>
             )}
 
-            {editModal.type === 'unidad' && (
-              <div className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="col-span-2">
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Nombre</label>
-                    <input type="text" value={editUnidadForm.nombre || ''} onChange={(e) => setEditUnidadForm({...editUnidadForm, nombre: e.target.value})} className="w-full px-3 py-2 border rounded-lg" />
-                  </div>
-                  <div className="col-span-2">
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Razón Social</label>
-                    <input type="text" value={editUnidadForm.razonSocial || ''} onChange={(e) => setEditUnidadForm({...editUnidadForm, razonSocial: e.target.value})} className="w-full px-3 py-2 border rounded-lg" />
-                  </div>
-                  <div className="col-span-2">
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Dirección</label>
-                    <input type="text" value={editUnidadForm.direccion || ''} onChange={(e) => setEditUnidadForm({...editUnidadForm, direccion: e.target.value})} className="w-full px-3 py-2 border rounded-lg" />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Distrito</label>
-                    <input type="number" value={editUnidadForm.distrito || ''} onChange={(e) => setEditUnidadForm({...editUnidadForm, distrito: parseInt(e.target.value)})} className="w-full px-3 py-2 border rounded-lg" />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email</label>
-                    <input type="email" value={editUnidadForm.email || ''} onChange={(e) => setEditUnidadForm({...editUnidadForm, email: e.target.value})} className="w-full px-3 py-2 border rounded-lg" />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Coordenada X</label>
-                    <input type="number" value={editUnidadForm.x || ''} onChange={(e) => setEditUnidadForm({...editUnidadForm, x: parseInt(e.target.value)})} className="w-full px-3 py-2 border rounded-lg" />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Coordenada Y</label>
-                    <input type="number" value={editUnidadForm.y || ''} onChange={(e) => setEditUnidadForm({...editUnidadForm, y: parseInt(e.target.value)})} className="w-full px-3 py-2 border rounded-lg" />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">MSNM</label>
-                    <input type="number" value={editUnidadForm.msnm || ''} onChange={(e) => setEditUnidadForm({...editUnidadForm, msnm: parseInt(e.target.value)})} className="w-full px-3 py-2 border rounded-lg" />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Fase Actividad</label>
-                    <input type="text" value={editUnidadForm.faseActividad || ''} onChange={(e) => setEditUnidadForm({...editUnidadForm, faseActividad: e.target.value})} className="w-full px-3 py-2 border rounded-lg" />
-                  </div>
-                </div>
-                {unidad.representanteLegal && (
-                  <div className="border-t pt-4 mt-4">
-                    <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-3">Representante Legal</h4>
-                    <div className="grid grid-cols-3 gap-4">
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Nombre</label>
-                        <input type="text" value={editRepresentanteForm.nombre || ''} onChange={(e) => setEditRepresentanteForm({...editRepresentanteForm, nombre: e.target.value})} className="w-full px-3 py-2 border rounded-lg" />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">CI</label>
-                        <input type="text" value={editRepresentanteForm.ci || ''} onChange={(e) => setEditRepresentanteForm({...editRepresentanteForm, ci: e.target.value})} className="w-full px-3 py-2 border rounded-lg" />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Teléfono</label>
-                        <input type="text" value={editRepresentanteForm.telefono || ''} onChange={(e) => setEditRepresentanteForm({...editRepresentanteForm, telefono: e.target.value})} className="w-full px-3 py-2 border rounded-lg" />
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-            )}
-
             <div className="flex justify-end gap-2 mt-6">
               <button onClick={() => setEditModal(null)} className="px-4 py-2 border rounded-lg hover:bg-gray-50 dark:bg-gray-700">Cancelar</button>
               <button onClick={() => {
@@ -633,7 +527,6 @@ export default function ExpedienteDetallePage() {
                 else if (editModal.type === 'informe') saveEditInforme();
                 else if (editModal.type === 'historial') saveEditHistorial();
                 else if (editModal.type === 'registroInicial') saveEditRegistroInicial();
-                else if (editModal.type === 'unidad') saveEditUnidad();
               }} disabled={saving} className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 disabled:bg-indigo-300">Guardar</button>
             </div>
           </div>
@@ -698,13 +591,17 @@ export default function ExpedienteDetallePage() {
           </span>
           <span className={`px-3 py-1 rounded-full text-sm font-semibold ${
             unidad.categoriaFinal === 3 ? 'bg-rose-100 text-rose-800' :
+            unidad.categoriaFinal === 4 ? 'bg-teal-100 dark:bg-teal-950 text-teal-800 dark:text-teal-300' :
             unidad.categoriaFinal === 2 ? 'bg-purple-100 dark:bg-purple-950 text-purple-800 dark:text-purple-300' : 'bg-blue-100 dark:bg-blue-950 text-blue-800 dark:text-blue-300'
           }`}>
-            Categoría {unidad.categoriaFinal}
+            Categoría {nombreCategoria(unidad.categoriaFinal)}
           </span>
-          <button onClick={openEditUnidad} className="ml-2 px-3 py-1 bg-indigo-600 text-white rounded-full text-sm font-semibold hover:bg-indigo-700">
+          <Link
+            href={`/admin/expediente/editar?id=${id}`}
+            className="ml-2 px-3 py-1 bg-indigo-600 text-white rounded-full text-sm font-semibold hover:bg-indigo-700"
+          >
             Editar
-          </button>
+          </Link>
         </div>
       </div>
 
@@ -789,6 +686,9 @@ export default function ExpedienteDetallePage() {
                 </div>
               </>
             )}
+
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 border-b pb-2 mt-8">Ubicación</h2>
+            <MapaCoordenadas x={unidad.x} y={unidad.y} altura={380} />
           </div>
         )}
 
@@ -811,16 +711,12 @@ export default function ExpedienteDetallePage() {
                   onChange={(e) => setNuevoRubro({ ...nuevoRubro, descripcion: e.target.value })}
                   className="px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                 />
-                <select
+                <SelectorCategoria
                   value={nuevoRubro.categoria}
-                  onChange={(e) => setNuevoRubro({ ...nuevoRubro, categoria: e.target.value })}
+                  onChange={(valor) => setNuevoRubro({ ...nuevoRubro, categoria: valor })}
+                  placeholder="Categoría"
                   className="px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                >
-                  <option value="">Categoría</option>
-                  <option value="1">Categoría 1</option>
-                  <option value="2">Categoría 2</option>
-                  <option value="3">Categoría 3</option>
-                </select>
+                />
                 <button
                   onClick={handleAddRubro}
                   disabled={saving}

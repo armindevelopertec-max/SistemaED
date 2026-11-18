@@ -3,6 +3,8 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { expedienteService } from '@/lib/api';
+import MapaCoordenadas from '@/components/MapaCoordenadas';
+import { nombreCategoria } from '@/lib/categorias';
 
 const ESTADOS_RAI = ['EN_TRAMITE', 'OBSERVADO', 'APROBADO', 'DESISTIDO', 'RECHAZADO', 'VENCIDO', 'SUSPENDIDO'];
 
@@ -68,9 +70,10 @@ export default function VisualizadorExpedienteDetallePage() {
           </span>
           <span className={`px-3 py-1 rounded-full text-sm font-semibold ${
             unidad.categoriaFinal === 3 ? 'bg-rose-100 text-rose-800' :
+            unidad.categoriaFinal === 4 ? 'bg-teal-100 dark:bg-teal-950 text-teal-800 dark:text-teal-300' :
             unidad.categoriaFinal === 2 ? 'bg-purple-100 dark:bg-purple-950 text-purple-800 dark:text-purple-300' : 'bg-blue-100 dark:bg-blue-950 text-blue-800 dark:text-blue-300'
           }`}>
-            Categoría {unidad.categoriaFinal}
+            Categoría {nombreCategoria(unidad.categoriaFinal)}
           </span>
         </div>
       </div>
@@ -102,6 +105,7 @@ export default function VisualizadorExpedienteDetallePage() {
                 <p><span className="text-gray-500 dark:text-gray-400">Distrito:</span> {unidad.distrito}</p>
                 <p><span className="text-gray-500 dark:text-gray-400">Email:</span> {unidad.email || '-'}</p>
                 <p><span className="text-gray-500 dark:text-gray-400">Fase:</span> {unidad.faseActividad}</p>
+                <p><span className="text-gray-500 dark:text-gray-400">Coordenadas:</span> {unidad.x && unidad.y ? `${unidad.x}, ${unidad.y}` : '-'}</p>
               </div>
             </div>
             {unidad.representanteLegal && (
@@ -114,6 +118,10 @@ export default function VisualizadorExpedienteDetallePage() {
                 </div>
               </div>
             )}
+            <div className="md:col-span-2">
+              <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-3">Ubicación</h3>
+              <MapaCoordenadas x={unidad.x} y={unidad.y} altura={320} />
+            </div>
           </div>
         )}
 

@@ -4,6 +4,10 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { expedienteService } from '@/lib/api';
+import MapaCoordenadas from '@/components/MapaCoordenadas';
+import SelectorCategoria from '@/components/SelectorCategoria';
+import { DISTRITOS } from '@/lib/distritos';
+import { ESTADOS_REGISTRO, FASES_ACTIVIDAD } from '@/lib/estados';
 import { RubroCAEB } from '@/types';
 
 export default function NuevoExpedientePage() {
@@ -19,6 +23,12 @@ export default function NuevoExpedientePage() {
     direccion: '',
     distrito: '',
     email: '',
+    categoriaFinal: '',
+    estadoRegistro: 'VIGENTE',
+    x: '',
+    y: '',
+    msnm: '',
+    faseActividad: 'OPERACION',
     representanteNombre: '',
     representanteCi: '',
     representanteTelefono: '',
@@ -30,7 +40,7 @@ export default function NuevoExpedientePage() {
     categoria: '',
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -50,6 +60,18 @@ export default function NuevoExpedientePage() {
     setError('');
     setLoading(true);
 
+    if (!formData.distrito) {
+      setError('Seleccione un distrito');
+      setLoading(false);
+      return;
+    }
+
+    if (!formData.categoriaFinal) {
+      setError('Seleccione la categoría de la unidad industrial');
+      setLoading(false);
+      return;
+    }
+
     try {
       const payload = {
         codigoRai: formData.codigoRai,
@@ -58,6 +80,12 @@ export default function NuevoExpedientePage() {
         direccion: formData.direccion,
         distrito: parseInt(formData.distrito),
         email: formData.email || undefined,
+        categoriaFinal: parseInt(formData.categoriaFinal),
+        estadoRegistro: formData.estadoRegistro,
+        x: formData.x ? parseInt(formData.x) : undefined,
+        y: formData.y ? parseInt(formData.y) : undefined,
+        msnm: formData.msnm ? parseInt(formData.msnm) : undefined,
+        faseActividad: formData.faseActividad || undefined,
         representanteLegal: {
           nombre: formData.representanteNombre,
           ci: formData.representanteCi,
@@ -159,15 +187,20 @@ export default function NuevoExpedientePage() {
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Distrito *
             </label>
-            <input
-              type="number"
+            <select
               name="distrito"
               value={formData.distrito}
               onChange={handleChange}
               required
-              min="1"
               className="w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-            />
+            >
+              <option value="">Seleccione un distrito</option>
+              {DISTRITOS.map((d) => (
+                <option key={d.id} value={d.id}>
+                  {d.id}
+                </option>
+              ))}
+            </select>
           </div>
 
           <div>
@@ -182,6 +215,111 @@ export default function NuevoExpedientePage() {
               className="w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
             />
           </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Categoría *
+            </label>
+            <SelectorCategoria
+              value={formData.categoriaFinal}
+              onChange={(valor) => setFormData({ ...formData, categoriaFinal: valor })}
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Estado de Registro *
+            </label>
+            <select
+              name="estadoRegistro"
+              value={formData.estadoRegistro}
+              onChange={handleChange}
+              required
+              className="w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+            >
+              {ESTADOS_REGISTRO.map((e) => (
+                <option key={e} value={e}>
+                  {e}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Coordenada X
+            </label>
+            <input
+              type="number"
+              name="x"
+              value={formData.x}
+              onChange={handleChange}
+              className="w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Coordenada Y
+            </label>
+            <input
+              type="number"
+              name="y"
+              value={formData.y}
+              onChange={handleChange}
+              className="w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              MSNM
+            </label>
+            <input
+              type="number"
+              name="msnm"
+              value={formData.msnm}
+              onChange={handleChange}
+              className="w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+            />
+            <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+              Metros sobre el nivel del mar (altitud del terreno)
+            </p>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Fase de Actividad
+            </label>
+            <select
+              name="faseActividad"
+              value={formData.faseActividad}
+              onChange={handleChange}
+              className="w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+            >
+              {FASES_ACTIVIDAD.map((f) => (
+                <option key={f} value={f}>
+                  {f}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        <div className="border-t pt-6">
+          <h3 className="text-lg font-medium text-gray-800 dark:text-gray-100 mb-4">Ubicación</h3>
+          <MapaCoordenadas
+            x={formData.x ? parseInt(formData.x) : null}
+            y={formData.y ? parseInt(formData.y) : null}
+            interactivo
+            onSeleccion={(coordenadas) =>
+              setFormData({
+                ...formData,
+                x: String(coordenadas.x),
+                y: String(coordenadas.y),
+              })
+            }
+          />
         </div>
 
         <div className="border-t pt-6">
@@ -282,11 +420,9 @@ export default function NuevoExpedientePage() {
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Categoría
               </label>
-              <input
-                type="text"
+              <SelectorCategoria
                 value={nuevoRubro.categoria}
-                onChange={(e) => setNuevoRubro({ ...nuevoRubro, categoria: e.target.value })}
-                className="w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                onChange={(valor) => setNuevoRubro({ ...nuevoRubro, categoria: valor })}
               />
             </div>
           </div>

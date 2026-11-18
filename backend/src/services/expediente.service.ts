@@ -24,6 +24,10 @@ export class ExpedienteService {
     representanteLegalDto?: CreateUnidadIndustrialDto['representanteLegal'],
     rubrosDto?: CreateUnidadIndustrialDto['rubrosActividad'],
   ) {
+    // Los datos anidados pueden venir en el DTO o como parámetros separados.
+    const representante = representanteLegalDto ?? dto.representanteLegal;
+    const rubros = rubrosDto ?? dto.rubrosActividad;
+
     return this.prisma.unidadIndustrial.create({
       data: {
         codigoRai: dto.codigoRai,
@@ -38,18 +42,18 @@ export class ExpedienteService {
         faseActividad: dto.faseActividad,
         estadoRegistro: dto.estadoRegistro,
         categoriaFinal: dto.categoriaFinal,
-        representanteLegal: representanteLegalDto
+        representanteLegal: representante
           ? {
               create: {
-                nombre: representanteLegalDto.nombre,
-                ci: representanteLegalDto.ci,
-                telefono: representanteLegalDto.telefono,
+                nombre: representante.nombre,
+                ci: representante.ci,
+                telefono: representante.telefono,
               },
             }
           : undefined,
-        rubrosActividad: rubrosDto
+        rubrosActividad: rubros
           ? {
-              create: rubrosDto.map((r) => ({
+              create: rubros.map((r) => ({
                 codigoCaeb: r.codigoCaeb,
                 descripcion: r.descripcion,
                 categoria: r.categoria,
@@ -124,10 +128,18 @@ export class ExpedienteService {
         ...unidadData,
         representanteLegal: representanteLegal
           ? {
-              update: {
-                nombre: representanteLegal.nombre,
-                ci: representanteLegal.ci,
-                telefono: representanteLegal.telefono,
+              // upsert: la unidad puede no tener representante registrado aun.
+              upsert: {
+                create: {
+                  nombre: representanteLegal.nombre ?? '',
+                  ci: representanteLegal.ci ?? '',
+                  telefono: representanteLegal.telefono ?? '',
+                },
+                update: {
+                  nombre: representanteLegal.nombre,
+                  ci: representanteLegal.ci,
+                  telefono: representanteLegal.telefono,
+                },
               },
             }
           : undefined,
